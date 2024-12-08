@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}- Mover stock{% endblock title %}
+
+{% block content %}
+<div style="padding: 20px;">
+    <h1>Este es el movimiento de stock</h1>
+</div>
+
+<div class="button-container">
+    <a href="/addstock" class="button">Add stock</a>
+    <a href="/removestock" class="button">Remove stock</a>
+</div>
+{% endblock content %}

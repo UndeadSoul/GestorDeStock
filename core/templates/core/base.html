@@ -1,0 +1,29 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "core/css/styles.css" %}">
+    <title>Gestor de stock {% block title %}{% endblock title %} </title>
+</head>
+<body>
+    {% comment %} navegation {% endcomment %}
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/records">Registros</a>
+        <a href="/inventory">Inventario</a>
+        <a href="/movestock">Mover Stock</a>
+        <a href="#">logout</a>
+    </div>
+
+    <div style="padding: 20px;">
+        <h1>Bienvenido</h1>
+        <p>Usa los enlaces de la barra de navegación para probar el diseño.</p>
+    </div>
+    {% block content %}
+    {% endblock content %}
+
+</body>
+</html>
