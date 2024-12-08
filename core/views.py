@@ -90,9 +90,18 @@ def records(request):
 def inventory(request):
     #Obtener los productos en inventario y ordenarlos por cantidad
     products=product.objects.all().order_by('product_stock')
-    #TODO separar los datos de un producto seleccionado y mostrarlo a un lado de la pantalla
+    #Si hay productos obtener el primero para mostrar por defecto
+    if len(products)==0:
+        #en caso de que no hayan productos, retornará vacío
+        selectedProd=""
+    else:
+        #obtiene la id seleccionada (por defecto la id 0)
+        selectedId=request.GET.get("selectedId",0)
+        selectedProd=product.objects.filter(product_id=selectedId)
+
     return render(request,"core/inventory.html",{
         "products":products,
+        "selectedProd":selectedProd,
     })
 
 # Move stock
@@ -101,8 +110,11 @@ def movestock(request):
 
 ### Add stock
 def addstock(request):
-    #TODO cargar los productos para mostrarlos como opcion de producto a aumentar el stock
-    return render(request,"core/addstock.html",{})
+    #Cargar los productos para mostrarlos como opcion de producto a aumentar el stock
+    products=product.objects.all()
+    return render(request,"core/addstock.html",{
+        "products":products,
+    })
 
 def addproduct(request):
     #? las id se aumentan automatico, así que no es necesario hacer las consuultas
@@ -114,7 +126,23 @@ def removestock(request):
     return render(request,"core/removestock.html",{})
 
 def confirmremove(request):
-    return render(request,"core/confirmremove.html",{})
+    #el html debe hacer la diferencia de si es que queda el stock suficiente
+    #obtener el id
+    productid=request.GET.get("id")
+    #obtener la cantidad
+    productamount=request.GET.get("amount")
+    #hay suficiente stock?
+    selectedprod=product.objects.filter(product_id=productid)
+    if (selectedprod[0]-productamount)>=0:
+        stock="yes"
+    else:
+        stock="no"
+
+    return render(request,"core/confirmremove.html",{
+        "stock":stock,
+        "selectedprod":selectedprod,
+        "productamount":productamount,
+    })
 
 # Confirm
 def finalconfirm(request):
