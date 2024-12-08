@@ -90,6 +90,7 @@ def records(request):
 def inventory(request):
     #Obtener los productos en inventario y ordenarlos por cantidad
     products=product.objects.all().order_by('product_stock')
+    #TODO separar los datos de un producto seleccionado y mostrarlo a un lado de la pantalla
     return render(request,"core/inventory.html",{
         "products":products,
     })
@@ -100,13 +101,16 @@ def movestock(request):
 
 ### Add stock
 def addstock(request):
+    #TODO cargar los productos para mostrarlos como opcion de producto a aumentar el stock
     return render(request,"core/addstock.html",{})
 
 def addproduct(request):
+    #? las id se aumentan automatico, así que no es necesario hacer las consuultas
     return render(request,"core/addproduct.html",{})
 
 ### Remove stock
 def removestock(request):
+    #Aqui solo se introducen los datos del movimiento y en confirmar remove depende si es queda la cantidad necesaria
     return render(request,"core/removestock.html",{})
 
 def confirmremove(request):
@@ -114,4 +118,5 @@ def confirmremove(request):
 
 # Confirm
 def finalconfirm(request):
+    #Envía a una pagina que confirma que la transaccion fue exitosa y redirige a home
     return render(request,"core/finalconfirm.html",{})
