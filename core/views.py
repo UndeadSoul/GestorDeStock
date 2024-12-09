@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, render
+from django.contrib.auth.models import User
 from crud.models import addMovements,removeMovements,employee,storage,product
 from datetime import datetime, timedelta
 from django.db.models import Q
@@ -20,7 +21,19 @@ def home(request):
     })
 
 def usermanage(request):
-    return render(request,"core/usermanage.html",{})
+    #lista con los usuarios
+    users=User.objects.all()
+    #si es que se seleccionó un usuario
+    selectedUserId=request.GET.get("userid",users[0])
+    selectedUser=User.objects.filter(id=selectedUserId)
+
+    #si es que se está añadiendo un usuario
+    adduser=request.GET.get("addUser",False)
+    return render(request,"core/usermanage.html",{
+        "users":users,
+        "selectedUser":selectedUser,
+        "adduser":adduser,
+    })
 
 # Records
 def records(request):

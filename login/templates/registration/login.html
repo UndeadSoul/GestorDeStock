@@ -9,10 +9,11 @@
                 <h1 class="card-title" style="color: darkorange;">Iniciar Sesión</h1>
                 <form method="post">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    <table>
+                        {{ form.as_table }}
+                    </table>
                     <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
                 </form>
-                <p>¿No tienes una cuenta? <a href="{% url 'register' %}">Regístrate aquí</a></p>
             </div>
         </div>
         <br>
