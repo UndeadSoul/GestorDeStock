@@ -16,15 +16,42 @@
         <a href="/inventory">Inventario</a>
         <a href="/movestock">Mover Stock</a>
         <a href="#">logout</a>
+    <!-- iniciar sesion -->
+        {% if request.user.is_authenticated %}
+        <li class="nav-item nav-item">
+            <li class="nav-item d-flex align-items-center ml-3">
+                <p class="nav-link" >
+                    <img src="../../static/core/images/iconsperson1.png" alt="">
+                    {{ user.username }}
+                </p>
+            </li>
+        </li>
+
+        <li class="nav-item nav-item">
+            <a class="nav-link" href={% url 'logout' %}>Salir</a>
+        </li>
+
+        {% else %}
+        <li class="nav-item">
+            <li class="nav-item d-flex align-items-center ml-3">
+                <a class="nav-link" href={% url 'login'%}>
+                    Iniciar sesión
+                </a>
+            </li>
+        </li>
+        {% endif %}
+        {% comment %} iniciar sesion {% endcomment %}
     </div>
 
     <div style="padding: 20px;">
         <h1>Bienvenido</h1>
         <p>Usa los enlaces de la barra de navegación para probar el diseño.</p>
     </div>
+
+
     {% block content %}
     {% endblock content %}
 
-    
+
 </body>
 </html>

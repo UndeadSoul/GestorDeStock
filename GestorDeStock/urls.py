@@ -15,10 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 from core import views as viewscore
+from login import views as viewslogin
+from django.contrib.auth.views import LogoutView
+
 
 
 urlpatterns = [
@@ -33,6 +36,11 @@ urlpatterns = [
     path('removestock', viewscore.removestock, name='removestock'),
     path('confirmremove', viewscore.confirmremove, name='confirmremove'),
     path('finalconfirm', viewscore.finalconfirm, name='finalconfirm'),
+    # Relación entre las urls y las views de login/register
+    path('accounts/login/', viewslogin.LoginView.as_view(), name="login"),
+    path('accounts/register/', viewslogin.register, name="register"),
+    path('accounts/logout/', LogoutView.as_view(next_page="login"), name="logout"),
+    path('', include("login.urls")),
 
 ]
 
