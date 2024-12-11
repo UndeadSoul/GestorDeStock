@@ -1,12 +1,46 @@
 {% extends "core/base.html" %}
 {% load static %}
 
-{% block title %}- confirmar stock a remover{% endblock title %}
+{% block title %}Confirmar stock a remover{% endblock title %}
 
 {% block content %}
-<div style="padding: 20px;">
-    <h1>Aquí se confirma el movimiento de remover</h1>
+<div class="container-confirmremove">
+    <h2 class="title-confirmremove">Confirmar salida</h2>
+    <div class="content-confirmremove">
+        <div class="details-confirmremove">
+            <p><strong>Nombre del producto:</strong> {{ selectedprod.0.product_name }}</p>
+            <p><strong>ID:</strong> {{ selectedprod.0.product_id }}</p>
+            <p><strong>Stock actual:</strong> {{ selectedprod.0.product_stock }}</p>
+            <p><strong>Cantidad a remover:</strong> {{ productamount }}</p>
+        </div>
+        <div class="image-confirmremove">
+            {% if selectedprod.0.product_image %}
+            <img src="{{ selectedprod.0.product_image.url }}" alt="Imagen de {{ selectedprod.0.product_name }}">
+            {% else %}
+            <img src="{% static 'path_to_placeholder_image.png' %}" alt="Imagen no disponible">
+            {% endif %}
+        </div>
+    </div>
+    
+    {% if stock == "yes" %}
+    <p class="message-confirmremove success">El stock es suficiente para realizar la operación.</p>
+    <div class="buttons-confirmremove">
+        <!-- Confirmar redirige a movestock con parámetros adicionales -->
+        <a href="{% url 'movestock' %}?action=confirm&id={{ selectedprod.0.product_id }}&amount={{ productamount }}" class="btn-confirm-confirmremove">Confirmar</a>
+        <!-- Cancelar regresa a removestock -->
+        <a href="{% url 'movestock' %}?action=cancel" class="btn-cancel-confirmremove">Cancelar</a>
+    </div>
+    {% else %}
+    <p class="message-confirmremove error">No hay suficiente stock para remover esta cantidad.</p>
+    <div class="buttons-confirmremove">
+        <a href="{% url 'removestock' %}" class="btn-cancel-confirmremove">Volver</a>
+    </div>
+    {% endif %}
 </div>
-
-
 {% endblock content %}
+
+{% block logincontent %}
+<div class="button-container">
+    <a class="button" href={% url 'login'%}>Iniciar sesión</a>
+</div>
+{% endblock logincontent %}

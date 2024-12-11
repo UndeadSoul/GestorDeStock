@@ -1,14 +1,38 @@
 {% extends "core/base.html" %}
 {% load static %}
 
-{% block title %}- Confirmación{% endblock title %}
+{% block title %}Confirmar stock a añadir{% endblock title %}
 
 {% block content %}
-<div style="padding: 20px;">
-    <h1>El movimiento se ha realizado con exito</h1>
-</div>
-<div class="button-container">
-    <a href="/" class="button">Volver a inicio</a>
-</div>
+<div class="container-confirmadd">
+    <h2 class="title-confirmadd">Confirmar entrada</h2>
+    <div class="content-confirmadd">
+        <div class="details-confirmadd">
+            <p><strong>Nombre del producto:</strong> {{ selectedprod.0.product_name }}</p>
+            <p><strong>ID:</strong> {{ selectedprod.0.product_id }}</p>
+            <p><strong>Stock actual:</strong> {{ selectedprod.0.product_stock }}</p>
+            <p><strong>Cantidad a añadir:</strong> {{ productamount }}</p>
+        </div>
+        <div class="image-confirmadd">
+            {% if selectedprod.0.product_image %}
+            <img src="{{ selectedprod.0.product_image.url }}" alt="Imagen de {{ selectedprod.0.product_name }}">
+            {% else %}
+            <img src="{% static 'path_to_placeholder_image.png' %}" alt="Imagen no disponible">
+            {% endif %}
+        </div>
+    </div>
 
+    <div class="buttons-confirmadd">
+        <!-- Confirmar redirige a movestock con parámetros adicionales -->
+        <a href="{% url 'movestock' %}?action=confirm&id={{ selectedprod.0.product_id }}&amount={{ productamount }}" class="btn-confirm-confirmadd">Confirmar</a>
+        <!-- Cancelar regresa a addstock -->
+        <a href="{% url 'addstock' %}" class="btn-cancel-confirmadd">Cancelar</a>
+    </div>
+</div>
 {% endblock content %}
+
+{% block logincontent %}
+<div class="button-container">
+    <a class="button" href={% url 'login' %}>Iniciar sesión</a>
+</div>
+{% endblock logincontent %}

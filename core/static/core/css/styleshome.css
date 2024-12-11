@@ -1,0 +1,140 @@
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.containerlogin {
+    max-width: 1200px;
+    margin: 20px auto;
+    display: flex;
+    place-items: center; /* Centra horizontal y verticalmente */
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Títulos */
+h4 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+p {
+    margin: 5px 0;
+}
+
+/* Contenedor principal */
+.main-content {
+    width: 85%;
+    height: 70%;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+/* Contenedor izquierdo */
+.left-panel {
+    width: 80%;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.left-panel h4 {
+    text-align: center;
+    color: #333;
+}
+
+.left-panel ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.left-panel ul li {
+    padding: 5px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.left-panel ul li:last-child {
+    border-bottom: none;
+}
+
+/* Panel derecho */
+.right-panel {
+    width: 40%;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.right-panel img {
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.right-panel p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Botones (si hay) */
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Responsivo */
+@media (max-width: 1000px) {
+    .main-content {
+        flex-direction: column;
+    }
+
+    .left-panel,
+    .right-panel {
+        margin-bottom: 20px;
+    }
+}

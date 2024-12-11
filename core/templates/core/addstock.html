@@ -1,15 +1,62 @@
 {% extends "core/base.html" %}
 {% load static %}
 
-{% block title %}- Añadir Stock{% endblock title %}
+{% block title %}Añadir Stock{% endblock title %}
 
 {% block content %}
-<div style="padding: 20px;">
-    <h1>Aquí se añade el stock</h1>
-</div>
+<div class="container" style="align-items: center;">
 
-<div class="button-container">
-    <a href="/finalconfirm" class="button">Confirmar</a>
-    <a href="/movestock" class="button">Volver</a>
+    <h1>Entrada de Stock</h1>
+
+    <form method="post" action="{% url 'addstock' %}">
+        {% csrf_token %}
+
+        <!-- Seleccionar producto -->
+        <label for="product">Elija producto:</label>
+        <select name="product" id="product" required>
+            <option value="" disabled selected>Seleccione un producto</option>
+            {% for product in products %}
+                <option value="{{ product.id }}">{{ product.product_name }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- Ingresar cantidad -->
+        <label for="quantity">Ingrese cantidad:</label>
+        <input 
+            type="number" 
+            id="quantity" 
+            name="quantity" 
+            min="1" 
+            max="50" 
+            placeholder="Cantidad (1-50)" 
+            required
+            >
+        {% comment %} 
+        <!-- Seleccionar bodega -->
+        <label for="storage">Seleccione bodega:</label>
+        <select name="storage" id="storage" required>
+            <option value="" disabled selected>Seleccione una bodega</option>
+            {% for storage in storages %}
+            <option value="{{ storage.id }}">{{ storage.storage_address }}</option>
+            {% endfor %}
+        </select>
+        {% endcomment %}
+        
+        <!-- Icono de confirmación -->
+        <div class="icon-container">
+            <a class="button" href={% url 'addproduct'%}>añadir prodructo</a>
+        </div>
+
+        <!-- Botón confirmar -->
+        <a href={% url 'finalconfirm'%}>
+            <button type="submit">Confirmar</button>
+        </a>
+    </form>
 </div>
 {% endblock content %}
+
+{% block logincontent %}
+<div class="button-container">
+    <a class="button" href={% url 'login'%}>Iniciar sesión</a>
+</div>
+{% endblock logincontent %}

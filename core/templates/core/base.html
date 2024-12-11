@@ -5,53 +5,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'core/css/styleaddproduc.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/stylemovproduc.css' %}">
+    <link rel="stylesheet" href="{% static "core/css/stylerecords.css" %}">
     <link rel="stylesheet" href="{% static "core/css/styles.css" %}">
-    <title>Gestor de stock {% block title %}{% endblock title %} </title>
+    <link rel="stylesheet" href="{% static 'core/css/styleshome.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/styleinventory.css' %}">
+    <link rel="stylesheet" href="{% static "core/css/stytleconfirmremove.css" %}">
+ 
+
+    <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
     {% comment %} navegation {% endcomment %}
-    <div class="navbar">
-        <a href="/">Home</a>
-        <a href="/records">Registros</a>
-        <a href="/inventory">Inventario</a>
-        <a href="/movestock">Mover Stock</a>
-        <a href="#">logout</a>
-    <!-- iniciar sesion -->
+    <nav class="navbar">
+        <a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a>
+        <a href="/records" class="{% if request.path == '/records' %}active{% endif %}">Registros</a>
+        <a href="/inventory" class="{% if request.path == '/inventory' %}active{% endif %}">Inventario</a>
+        <a href="/movestock" class="{% if request.path == '/movestock' %}active{% endif %}">Mover Stock</a>
         {% if request.user.is_authenticated %}
-        <li class="nav-item nav-item">
-            <li class="nav-item d-flex align-items-center ml-3">
-                <p class="nav-link" >
-                    <img src="../../static/core/images/iconsperson1.png" alt="">
-                    {{ user.username }}
-                </p>
-            </li>
-        </li>
-
-        <li class="nav-item nav-item">
-            <a class="nav-link" href={% url 'logout' %}>Salir</a>
-        </li>
-
+        <a class="nav-link" href={% url 'logout' %}>Cerrar sesion</a>
         {% else %}
-        <li class="nav-item">
-            <li class="nav-item d-flex align-items-center ml-3">
-                <a class="nav-link" href={% url 'login'%}>
-                    Iniciar sesión
-                </a>
-            </li>
-        </li>
+        <a class="nav-link" href={% url 'login'%}>Iniciar sesión</a>
         {% endif %}
-        {% comment %} iniciar sesion {% endcomment %}
-    </div>
-
-    <div style="padding: 20px;">
-        <h1>Bienvenido</h1>
-        <p>Usa los enlaces de la barra de navegación para probar el diseño.</p>
-    </div>
-
-
+    </nav>
+    {% if request.user.is_authenticated %}
     {% block content %}
     {% endblock content %}
+    {% else %}
 
+    {% block logincontent %}
+    {% endblock logincontent %}
+
+    {% endif %}
 
 </body>
 </html>

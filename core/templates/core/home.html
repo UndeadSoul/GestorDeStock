@@ -1,10 +1,43 @@
 {% extends "core/base.html" %}
 {% load static %}
 
-{% block title %}- Home{% endblock title %}
+{% block title %}Home{% endblock title %}
 
 {% block content %}
-<div style="padding: 20px;">
-    <h1>Este es el home</h1>
+
+<div class="main-content">
+    <!-- Panel izquierdo -->
+    <div class="left-panel">
+        <h4>Alertas</h4>
+        <ul>
+            {% for product  in criticalStock %}
+            <li>{{ product.product_name }}: {{ product.product_stock }} unidades</li>
+            {% endfor %}
+        </ul>
+
+        <h4>Últimos movimientos</h4>
+        <ul>
+            {% for movimiento in inmov %}
+            <li>{{ movimiento.addmov_date }} - Producto: {{ movimiento.product.first.product_name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- Panel derecho -->
+    <div class="right-panel">
+
+        <img src="{% static 'path_to_avatar.png' %}" alt="Foto de perfin">
+        <p><strong>Nombre:</strong> {{ user.username }}</p>
+        <p><strong>Edad:</strong> {{ user.edad }}</p>
+        <p><strong>Fono:</strong> {{ user.Fono }}</p>
+        <p><strong>Correo Electrónico:</strong> {{ user.email }}</p>
+    </div>
+
+
+    
+{% endblock %}
+
+{% block logincontent %}
+<div class="button-container">
+    <a class="button" href={% url 'login'%}>Iniciar sesión</a>
 </div>
-{% endblock content %}
+{% endblock logincontent %}

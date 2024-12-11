@@ -1,10 +1,53 @@
 {% extends "core/base.html" %}
 {% load static %}
 
-{% block title %}- Inventario{% endblock title %}
+{% block title %}Inventario{% endblock title %}
 
 {% block content %}
-<div style="padding: 20px;">
-    <h1>Este es el inventario</h1>
+<div class="inventory-container">
+    <!-- Contenedor principal -->
+    <div class="inventory-main-content">
+        <!-- Panel izquierdo (Lista de productos) -->
+        <div class="inventory-left-panel">
+            <h4>Productos</h4>
+            <ul>
+                {% for product in products %}
+                    <li class="{% if product.product_stock <= 5 %}low-stock{% endif %}">
+                        <a href="?selectedId={{ product.product_id }}" class="inventory-product-link">
+                            {{ product.product_name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Panel derecho (Detalles del producto) -->
+        <div class="inventory-right-panel">
+            <h2>Producto</h2>
+            {% if selectedProd %}
+                <div class="inventory-product-details">
+                    <div class="inventory-image-container">
+                        <img class="inventory-image" src="{{ selectedProd.0.product_image.url }}" alt="Imagen del producto">
+                    </div>
+                    <p><strong>Nombre del producto:</strong> {{ selectedProd.0.product_name }}</p>
+                    <p><strong>ID:</strong> {{ selectedProd.0.product_id }}</p>
+                    <p><strong>Stock:</strong> {{ selectedProd.0.product_stock }}</p>
+                    <p><strong>Estado:</strong> {{ selectedProd.0.product_desc }}</p>
+                    <p><strong>Bodega:</strong> {{ selectedProd.0.storage.storage_id }}</p>
+
+                    <div class="button-container">
+                        <a href="{% url 'addproduct' %}" class="button">Añadir Nuevo Producto</a>
+                    </div>
+            {% else %}
+                <p>Selecciona un producto para ver los detalles.</p>
+            {% endif %}
+        </div>
+    </div>
 </div>
 {% endblock content %}
+
+{% block logincontent %}
+<div class="button-container">
+    <a class="button" href={% url 'login' %}>Iniciar sesión</a>
+</div>
+{% endblock logincontent %}

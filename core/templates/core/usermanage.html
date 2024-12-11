@@ -1,7 +1,7 @@
 {% extends "core/base.html" %}
 {% load static %}
 
-{% block title %}- Gestionar usuarios{% endblock title %}
+{% block title %}Gestionar usuarios{% endblock title %}
 
 {% block content %}
 <div style="padding: 20px;">
@@ -10,3 +10,9 @@
 
 
 {% endblock content %}
+
+{% block logincontent %}
+<div class="button-container">
+    <a class="button" href={% url 'login'%}>Iniciar sesión</a>
+</div>
+{% endblock logincontent %}

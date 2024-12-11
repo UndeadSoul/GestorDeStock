@@ -1,12 +1,46 @@
 {% extends "core/base.html" %}
 {% load static %}
 
-{% block title %}- Añadir producto{% endblock title %}
+{% block title %}Añadir Producto{% endblock title %}
 
 {% block content %}
-<div style="padding: 20px;">
-    <h1>Aquí se añade un producto</h1>
+<div class="container">    
+    <div class="form-container-addprod">
+        <h2 class="title-addprod">Añadir producto</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group-addprod">
+                <label for="id_product_name">Nombre del producto:</label>
+                {{ form.product_name }}
+            </div>
+            <div class="form-group-addprod">
+                <label for="id_product_price">Precio:</label>
+                {{ form.product_price }}
+            </div>
+            <div class="form-group-addprod">
+                <label for="id_product_stock">Stock:</label>
+                {{ form.product_stock }}
+            </div>
+            <div class="form-group-addprod">
+                <label for="id_storage">Bodega:</label>
+                {{ form.storage }}
+            </div>
+            <div class="form-group-addprod">
+                <label for="id_product_desc">Descripción:</label>
+                {{ form.product_desc }}
+            </div>
+            <div class="form-group-addprod">
+                <label for="id_product_image">Imagen:</label>
+                {{ form.product_image }}
+            </div>
+            <button type="submit" class="btn-addprod">Confirmar</button>
+        </form>
+    </div>
 </div>
-
-
-{% endblock content %}
+    {% endblock content %}
+    
+    {% block logincontent %}
+    <div class="button-container">
+        <a class="button" href={% url 'login'%}>Iniciar sesión</a>
+    </div>
+    {% endblock logincontent %}

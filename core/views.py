@@ -41,13 +41,17 @@ def records(request):
     period=request.GET.get("periodoftime")
     # Entregar los elementos en base al periodo obtenido
     if period=="day":
-        #obtener fecha de hoy
-        today=datetime.now().date()
+        # Obtener el rango del día de hoy
+        today = datetime.now()
+        day_start = datetime.combine(today.date(), datetime.min.time())  # 00:00:00
+        day_end = datetime.combine(today.date(), datetime.max.time())    # 23:59:59
         #filtrar los registros de hoy
-        recordsoftodayadd=addMovements.objects.filter(addmov_date=today)
-        recordsoftodayremove=removeMovements.objects.filter(removemov_date=today)
+        recordsoftodayadd=addMovements.objects.filter(addmov_date__range=(day_start, day_end))
+        recordsoftodayremove=removeMovements.objects.filter(removemov_date__range=(day_start, day_end))
         recordsadd=recordsoftodayadd
         recordsremove=recordsoftodayremove
+        print("add",recordsadd)
+        print("remove",recordsremove)
 
     elif period=="week":
         #obtener fecha de hace una semana
@@ -64,8 +68,8 @@ def records(request):
         today=datetime.now().date()
         lastmonth=today-timedelta(days=31)
         #filtrar los registros del ultimo mes
-        recordsoflastmonthadd=addMovements.objects.filter(removemov_date=lastmonth)
-        recordsoflastmonthremove=removeMovements.objects.filter(removemov_date=lastmonth)
+        recordsoflastmonthadd=addMovements.objects.filter(addmov_date__gte=lastmonth)
+        recordsoflastmonthremove=removeMovements.objects.filter(removemov_date__gte=lastmonth)
         recordsadd=recordsoflastmonthadd
         recordsremove=recordsoflastmonthremove
 
@@ -74,8 +78,8 @@ def records(request):
         today=datetime.now().date()
         lastyear=today-timedelta(days=365)
         #filtrar los registros del ultimo año
-        recordsoflastyearadd=addMovements.objects.filter(removemov_date=lastyear)
-        recordsoflastyearremove=removeMovements.objects.filter(removemov_date=lastyear)
+        recordsoflastyearadd=addMovements.objects.filter(addmov_date__gte=lastyear)
+        recordsoflastyearremove=removeMovements.objects.filter(removemov_date__gte=lastyear)
         recordsadd=recordsoflastyearadd
         recordsremove=recordsoflastyearremove
 
@@ -85,11 +89,13 @@ def records(request):
         recordsremove=removeMovements.objects.all()
 
     else: 
-        #obtener fecha de hoy
-        today=datetime.now().date()
+# Obtener el rango del día de hoy
+        today = datetime.now()
+        day_start = datetime.combine(today.date(), datetime.min.time())  # 00:00:00
+        day_end = datetime.combine(today.date(), datetime.max.time())    # 23:59:59
         #filtrar los registros de hoy
-        recordsoftodayadd=addMovements.objects.filter(addmov_date=today)
-        recordsoftodayremove=removeMovements.objects.filter(removemov_date=today)
+        recordsoftodayadd=addMovements.objects.filter(addmov_date__range=(day_start, day_end))
+        recordsoftodayremove=removeMovements.objects.filter(removemov_date__range=(day_start, day_end))
         recordsadd=recordsoftodayadd
         recordsremove=recordsoftodayremove
         pass
