@@ -34,7 +34,7 @@ urlpatterns = [
     path('movestock', viewscore.movestock, name='movestock'),
     path('addstock', viewscore.addStockCreateView.as_view(), name='addstock'),
     path('addproduct', viewscore.addproduct, name='addproduct'),
-    path('removestock', viewscore.removestock, name='removestock'),
+    path('removestock', viewscore.removeStockCreateView.as_view(), name='removestock'),
     path('confirmremove', viewscore.confirmremove, name='confirmremove'),
     path('finalconfirm', viewscore.finalconfirm, name='finalconfirm'),
     # Relación entre las urls y las views de login/register

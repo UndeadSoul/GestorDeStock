@@ -7,9 +7,9 @@
 ------------Por Hacer------------
 - añadir usuarios
 - añadir productos
-- poder modificar los datos de un producto
 - poner un boton en home para añadir usuarios
 - poder modificar los datos de un usuarios
+- poder modificar los datos de un producto
 -------------Estética------------
 - corregir el boton de inicio de sesion
 - separar los estilos de las tablas

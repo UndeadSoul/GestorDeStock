@@ -3,33 +3,27 @@
 
 {% block title %}Remover Stock{% endblock title %}
 
+{% block style %}
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+{% endblock style %}
+
 {% block content %}
-<div class="container">
-    <h1>Remover Stock</h1>
-    <form method="GET" action="{% url 'confirmremove' %}">
-        {% csrf_token %}
-        <label for="product">Elija producto:</label>
-        <select name="id" id="product" required>
-            <option value="" disabled selected>Seleccione un producto</option>
-            {% for product in products %}
-                <option value="{{ product.product_id }}">{{ product.product_name }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        <label for="quantity">Ingrese cantidad:</label>
-        <input 
-            type="number" 
-            id="quantity" 
-            name="amount" 
-            min="1" 
-            placeholder="Cantidad (1 o más)" 
-            required
-        >
-        <br>
-        <!-- Botón confirmar -->
-        <button type="submit">Confirmar</button>
-    </form>
-</div>
+    {% load crispy_forms_tags %}
+    <div class="container my-4">
+        <h2>Retirar stock</h2>
+
+        <!-- sección de mensajes -->
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="card mx-auto my-5" style="width: 40rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Complete todos los campos</h5>
+                    {{ form | crispy }}
+                    <button class="btn btn-primary float-end" type="submit">Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
 {% endblock content %}
 
 {% block logincontent %}

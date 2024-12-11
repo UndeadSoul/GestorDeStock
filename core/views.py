@@ -6,7 +6,7 @@ from crud.models import addMovements,removeMovements,employee,storage,product
 from datetime import datetime, timedelta
 from django.db.models import Q
 from django.views.generic import TemplateView,CreateView
-from .forms import addmov_form
+from .forms import addmov_form, removemov_form
 from django.contrib import messages
 from registerlogin.models import Profile
 
@@ -165,6 +165,20 @@ def addproduct(request):
 def removestock(request):
     #Aqui solo se introducen los datos del movimiento y en confirmar remove depende si es queda la cantidad necesaria
     return render(request,"core/removestock.html",{})
+
+class removeStockCreateView(CreateView):
+    model=addMovements
+    form_class=removemov_form
+    template_name='core/addstock.html'
+    success_url=reverse_lazy('movestock')
+
+    def form_valid(self,form):
+        messages.success(self.request, "El movimiento se ha guardado correctamente")
+        return super().form_valid(form)
+    def form_invalid(self,form):
+        messages.success(self.request, "El movimiento no se ha guardado")
+        return self.render_to_response(self.get_context_data(form=form))
+
 
 def confirmremove(request):
     #el html debe hacer la diferencia de si es que queda el stock suficiente

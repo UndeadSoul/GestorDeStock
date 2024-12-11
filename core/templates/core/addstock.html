@@ -2,33 +2,23 @@
 {% load static %}
 
 {% block title %}Añadir Stock{% endblock title %}
-{% block style %}
 
-{% endblock style %}
+{% block style %}
 <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+{% endblock style %}
+
 {% block content %}
     {% load crispy_forms_tags %}
     <div class="container my-4">
         <h2>Agregar stock</h2>
 
         <!-- sección de mensajes -->
-        {% if messages %}
-            <div class="container mt-3">
-                {% for message in messages %}
-                <div class="alert alert-danger" role="alert">
-                    {{ message }}
-                </div>
-                {% endfor %}
-            </div>
-        {% endif %}
         <form action="" method="post">
             {% csrf_token %}
             <div class="card mx-auto my-5" style="width: 40rem;">
                 <div class="card-body">
                     <h5 class="card-title">Complete todos los campos</h5>
                     {{ form | crispy }}
-                    <a class="card-link" href="{% url 'home' %}">Inicio</a>
-                    <a class="card-link" href="{% url 'movestock' %}">Cursos</a>
                     <button class="btn btn-primary float-end" type="submit">Guardar</button>
                 </div>
             </div>
