@@ -1,9 +1,13 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 from crud.models import addMovements,removeMovements,employee,storage,product
 from datetime import datetime, timedelta
 from django.db.models import Q
+from django.views.generic import TemplateView,CreateView
+from .forms import addmov_form
+from django.contrib import messages
 
 
 # Home
@@ -134,6 +138,20 @@ def addstock(request):
     return render(request,"core/addstock.html",{
         "products":products,
     })
+
+class addStockCreateView(CreateView):
+    model=addMovements
+    form_class=addmov_form
+    template_name='core/addstock.html'
+    success_url=reverse_lazy('movestock')
+
+    def form_valid(self,form):
+        messages.success(self.request, "El movimiento se ha guardado correctamente")
+        return super().form_valid(form)
+    def form_invalid(self,form):
+        messages.success(self.request, "El movimiento no se ha guardado")
+        return self.render_to_response(self.get_context_data(form=form))
+
 
 def addproduct(request):
     #? las id se aumentan automatico, así que no es necesario hacer las consuultas
