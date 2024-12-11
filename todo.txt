@@ -3,8 +3,11 @@
 - arreglar los campos de referencias de los modelos
 - relacionar los usuarios con una clase para tener todos sus datos
 -------------HACIENDO------------
-- poder modificar los datos de un producto
+- añadir movimientos de salida con validacion
 ------------Por Hacer------------
+- añadir usuarios
+- añadir productos
+- poder modificar los datos de un producto
 - poner un boton en home para añadir usuarios
 - poder modificar los datos de un usuarios
 -------------Estética------------

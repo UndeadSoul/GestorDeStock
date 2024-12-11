@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.views.generic import TemplateView,CreateView
 from .forms import addmov_form
 from django.contrib import messages
+from registerlogin.models import Profile
 
 
 # Home
@@ -17,11 +18,14 @@ def home(request):
     lastOutMovements = removeMovements.objects.all().order_by('-removemov_id')[:5]
     # Obtener stocks críticos
     critical = product.objects.filter(product_stock__lt=5)
+    # Obtener el perfil del usuario
+    user=Profile.objects.filter(user=request.user)
 
     return render(request, "core/home.html", {
         "inmov": lastInMovements,
         "outmov": lastOutMovements,
-        "criticalStock": critical
+        "criticalStock": critical,
+        "userprofile":user
     })
 
 def usermanage(request):
@@ -50,8 +54,8 @@ def records(request):
         day_start = datetime.combine(today.date(), datetime.min.time())  # 00:00:00
         day_end = datetime.combine(today.date(), datetime.max.time())    # 23:59:59
         #filtrar los registros de hoy
-        recordsoftodayadd=addMovements.objects.filter(addmov_date__range=(day_start, day_end))
-        recordsoftodayremove=removeMovements.objects.filter(removemov_date__range=(day_start, day_end))
+        recordsoftodayadd=addMovements.objects.filter(addmov_date__range=(day_start, day_end)).order_by('-addmov_date')
+        recordsoftodayremove=removeMovements.objects.filter(removemov_date__range=(day_start, day_end)).order_by('-removemov_date')
         recordsadd=recordsoftodayadd
         recordsremove=recordsoftodayremove
         print("add",recordsadd)
@@ -62,8 +66,8 @@ def records(request):
         today=datetime.now().date()
         lastweek=today-timedelta(days=7)
         #filtrar los registros de la ultima semana
-        recordsoflastweekadd=addMovements.objects.filter(addmov_date__gte=lastweek)
-        recordsoflastweekremove=removeMovements.objects.filter(removemov_date__gte=lastweek)
+        recordsoflastweekadd=addMovements.objects.filter(addmov_date__gte=lastweek).order_by('-addmov_date')
+        recordsoflastweekremove=removeMovements.objects.filter(removemov_date__gte=lastweek).order_by('-removemov_date')
         recordsadd=recordsoflastweekadd
         recordsremove=recordsoflastweekremove
 
@@ -72,8 +76,8 @@ def records(request):
         today=datetime.now().date()
         lastmonth=today-timedelta(days=31)
         #filtrar los registros del ultimo mes
-        recordsoflastmonthadd=addMovements.objects.filter(addmov_date__gte=lastmonth)
-        recordsoflastmonthremove=removeMovements.objects.filter(removemov_date__gte=lastmonth)
+        recordsoflastmonthadd=addMovements.objects.filter(addmov_date__gte=lastmonth).order_by('-addmov_date')
+        recordsoflastmonthremove=removeMovements.objects.filter(removemov_date__gte=lastmonth).order_by('-removemov_date')
         recordsadd=recordsoflastmonthadd
         recordsremove=recordsoflastmonthremove
 
@@ -82,8 +86,8 @@ def records(request):
         today=datetime.now().date()
         lastyear=today-timedelta(days=365)
         #filtrar los registros del ultimo año
-        recordsoflastyearadd=addMovements.objects.filter(addmov_date__gte=lastyear)
-        recordsoflastyearremove=removeMovements.objects.filter(removemov_date__gte=lastyear)
+        recordsoflastyearadd=addMovements.objects.filter(addmov_date__gte=lastyear).order_by('-addmov_date')
+        recordsoflastyearremove=removeMovements.objects.filter(removemov_date__gte=lastyear).order_by('-removemov_date')
         recordsadd=recordsoflastyearadd
         recordsremove=recordsoflastyearremove
 
@@ -98,8 +102,8 @@ def records(request):
         day_start = datetime.combine(today.date(), datetime.min.time())  # 00:00:00
         day_end = datetime.combine(today.date(), datetime.max.time())    # 23:59:59
         #filtrar los registros de hoy
-        recordsoftodayadd=addMovements.objects.filter(addmov_date__range=(day_start, day_end))
-        recordsoftodayremove=removeMovements.objects.filter(removemov_date__range=(day_start, day_end))
+        recordsoftodayadd=addMovements.objects.filter(addmov_date__range=(day_start, day_end)).order_by('-addmov_date')
+        recordsoftodayremove=removeMovements.objects.filter(removemov_date__range=(day_start, day_end)).order_by('-removemov_date')
         recordsadd=recordsoftodayadd
         recordsremove=recordsoftodayremove
         pass

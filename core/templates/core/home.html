@@ -107,11 +107,11 @@
     <!-- Panel derecho -->
     <div class="right-panel">
 
-        <img src="{% static 'path_to_avatar.png' %}" alt="Foto de perfin">
-        <p><strong>Nombre:</strong> {{ user.username }}</p>
-        <p><strong>Edad:</strong> {{ user.edad }}</p>
-        <p><strong>Fono:</strong> {{ user.Fono }}</p>
-        <p><strong>Correo Electrónico:</strong> {{ user.email }}</p>
+        <img src={{userprofile.0.image.url}} alt="Foto de perfil">
+        <p><strong>Nombre:</strong> {{ userprofile.0.name }}</p>
+        <p><strong>Rut:</strong> {{ userprofile.0.rut }}</p>
+        <p><strong>Fono:</strong> {{ userprofile.0.telephone }}</p>
+        <p><strong>Correo Electrónico:</strong> {{ userprofile.0.email }}</p>
     </div>
 
 
