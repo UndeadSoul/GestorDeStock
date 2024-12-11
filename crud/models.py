@@ -1,4 +1,5 @@
 from django.db import models
+from registerlogin.models import Profile
 
 class employee(models.Model):
     employee_id=models.AutoField(primary_key=True)
@@ -30,7 +31,7 @@ class addMovements(models.Model):
     # product=models.ManyToManyField(product, verbose_name=("product"))
     # incharge=models.ManyToManyField(employee, verbose_name=("employee"))
     product=models.ForeignKey(product, on_delete=models.CASCADE, verbose_name=("product"), default=1)
-    incharge=models.ForeignKey(employee, on_delete=models.CASCADE, verbose_name=("employee"), default=1)
+    incharge=models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name=("profile"), default=1)
 
 class removeMovements(models.Model):
     removemov_id=models.AutoField(primary_key=True)
@@ -39,4 +40,4 @@ class removeMovements(models.Model):
     # product=models.ManyToManyField(product, on_delete=models.CASCADE, verbose_name=("product"))
     # incharge=models.ManyToManyField(employee, on_delete=models.CASCADE, verbose_name=("employee"))
     product=models.ForeignKey(product, on_delete=models.CASCADE, verbose_name=("product"), default=1)
-    incharge=models.ForeignKey(employee, on_delete=models.CASCADE, verbose_name=("employee"), default=1)
+    incharge=models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name=("profile"), default=1)

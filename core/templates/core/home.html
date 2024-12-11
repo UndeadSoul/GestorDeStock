@@ -3,24 +3,106 @@
 
 {% block title %}Home{% endblock title %}
 
+{% block styletable %}
+<style>
+    tablereg {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f4f4f4;
+    }
+    tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+</style>
+{% endblock styletable %}
+
 {% block content %}
 
 <div class="main-content">
+
     <!-- Panel izquierdo -->
     <div class="left-panel">
-        <h4>Alertas</h4>
+        {% comment %} alertas {% endcomment %}
+        <h1>Alertas</h1>
         <ul>
             {% for product  in criticalStock %}
             <li>{{ product.product_name }}: {{ product.product_stock }} unidades</li>
             {% endfor %}
         </ul>
 
-        <h4>Últimos movimientos</h4>
-        <ul>
-            {% for movimiento in inmov %}
-            <li>{{ movimiento.addmov_date }} - Producto: {{ movimiento.product.first.product_name }}</li>
-            {% endfor %}
-        </ul>
+        <h1>Últimos movimientos</h1>
+        {% comment %} registros de entrada {% endcomment %}
+        <h4>Registros de entrada</h4>
+        <table>
+            <thead>
+                <tr>
+                    <!-- Ajusta los encabezados de acuerdo a los campos del modelo -->
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Encargado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if inmov %}
+                    {% for registro in inmov %}
+                        <tr>
+                            <!-- Reemplaza los campos según los atributos de tu modelo -->
+                            <td>{{ registro.addmov_id }}</td>
+                            <td>{{ registro.addmov_date }}</td>
+                            <td>{{ registro.product.product_name }}</td>
+                            <td>{{ registro.addmov_prodQuantity }}</td>
+                            <td>{{ registro.incharge.user.username}}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5">No hay registros disponibles.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        {% comment %} registros de salida {% endcomment %}
+        <h4>Registros de salida</h4>
+        <table>
+            <thead>
+                <tr>
+                    <!-- Ajusta los encabezados de acuerdo a los campos del modelo -->
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Encargado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if outmov %}
+                    {% for registro in outmov %}
+                        <tr>
+                            <!-- Reemplaza los campos según los atributos de tu modelo -->
+                            <td>{{ registro.removemov_id }}</td>
+                            <td>{{ registro.removemov_date }}</td>
+                            <td>{{ registro.product.product_name }}</td>
+                            <td>{{ registro.removemov_prodQuantity }}</td>
+                            <td>{{ registro.incharge.user.username}}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5">No hay registros disponibles.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
     </div>
     <!-- Panel derecho -->
     <div class="right-panel">

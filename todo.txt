@@ -1,11 +1,11 @@
 --------------LISTO--------------
 - corregir las fechas de filtro de los registros
 - arreglar los campos de referencias de los modelos
--------------HACIENDO------------
 - relacionar los usuarios con una clase para tener todos sus datos
+-------------HACIENDO------------
+- poder modificar los datos de un producto
 ------------Por Hacer------------
 - poder modificar los datos de un usuarios
-- poder modificar los datos de un producto
 -------------Estética------------
 - corregir el boton de inicio de sesion
 - separar los estilos de las tablas
