@@ -19,13 +19,16 @@ def home(request):
     # Obtener stocks críticos
     critical = product.objects.filter(product_stock__lt=5)
     # Obtener el perfil del usuario
-    user=Profile.objects.filter(user=request.user)
+    # Verificar si el usuario está autenticado y obtener el perfil
+    user_profile = None
+    if request.user.is_authenticated:  # Verifica si el usuario está autenticado
+        user_profile = Profile.objects.filter(user=request.user)
 
     return render(request, "core/home.html", {
         "inmov": lastInMovements,
         "outmov": lastOutMovements,
         "criticalStock": critical,
-        "userprofile":user
+        "userprofile":user_profile
     })
 
 def usermanage(request):
