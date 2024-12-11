@@ -2,16 +2,17 @@
 - corregir las fechas de filtro de los registros
 - arreglar los campos de referencias de los modelos
 - relacionar los usuarios con una clase para tener todos sus datos
--------------HACIENDO------------
 - añadir movimientos de salida con validacion
-------------Por Hacer------------
-- añadir usuarios
-- añadir productos
+-------------HACIENDO------------
 - poner un boton en home para añadir usuarios
-- poder modificar los datos de un usuarios
-- poder modificar los datos de un producto
+- añadir usuarios
+------------Por Hacer------------
+- añadir productos
 -------------Estética------------
 - corregir el boton de inicio de sesion
 - separar los estilos de las tablas
 - corregir los estilos para que se vea bonito
 - corregir los estilos para que se vean del mismo tamaño
+-----------Por el pico-----------
+- poder modificar los datos de un usuarios
+- poder modificar los datos de un producto

@@ -172,7 +172,7 @@ def removestock(request):
 class removeStockCreateView(CreateView):
     model=addMovements
     form_class=removemov_form
-    template_name='core/addstock.html'
+    template_name='core/removestock.html'
     success_url=reverse_lazy('movestock')
 
     def form_valid(self,form):
