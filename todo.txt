@@ -6,6 +6,7 @@
 - poder modificar los datos de un producto
 ------------Por Hacer------------
 - poder modificar los datos de un usuarios
+- poner un boton en home para añadir usuarios
 -------------Estética------------
 - corregir el boton de inicio de sesion
 - separar los estilos de las tablas
