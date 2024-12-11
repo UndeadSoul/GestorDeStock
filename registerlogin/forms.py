@@ -15,3 +15,4 @@ class UserLoginForm(AuthenticationForm):
         model = User
         # Establece los campos que se utilizarán en el formulario
         fields = ["username", "password"]
+

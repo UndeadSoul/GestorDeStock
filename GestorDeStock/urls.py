@@ -43,6 +43,10 @@ urlpatterns = [
     path('accounts/logout/', LogoutView.as_view(next_page="login"), name="logout"),
     path('', include("registerlogin.urls")),
 
+    # Registro de usuario
+    path('adduser/', viewscore.AddUserView.as_view(), name="adduser"),
+
+    path('test', viewscore.test,name="test")
 ]
 
 if settings.DEBUG:

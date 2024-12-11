@@ -3,11 +3,11 @@
 - arreglar los campos de referencias de los modelos
 - relacionar los usuarios con una clase para tener todos sus datos
 - añadir movimientos de salida con validacion
--------------HACIENDO------------
 - poner un boton en home para añadir usuarios
 - añadir usuarios
-------------Por Hacer------------
+-------------HACIENDO------------
 - añadir productos
+------------Por Hacer------------
 -------------Estética------------
 - corregir el boton de inicio de sesion
 - separar los estilos de las tablas

@@ -4,8 +4,11 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
-from .forms import UserRegisterForm, UserLoginForm
+from .forms import UserRegisterForm, UserLoginForm, UserCreationForm
 from django.urls import reverse_lazy
+from django.contrib.auth.models import User
+from django.views.generic import TemplateView,CreateView
+
 
 # Create your views here.
 def register(request):

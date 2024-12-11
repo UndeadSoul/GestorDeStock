@@ -6,10 +6,20 @@ from crud.models import addMovements,removeMovements,employee,storage,product
 from datetime import datetime, timedelta
 from django.db.models import Q
 from django.views.generic import TemplateView,CreateView
-from .forms import addmov_form, removemov_form
+from .forms import addmov_form, removemov_form,UserCreationForm
 from django.contrib import messages
 from registerlogin.models import Profile
+from django.contrib.auth.models import Group
 
+# FUNCION PARA CONVERTIR EL PLURAL DE UN GRUPO A SU SINGULAR
+def plural_to_singular(plural):
+    # Diccionario de palabras
+    plural_singular = {
+        "trabajadores": "trabajador",
+        "jefes": "jefe",
+        "administrador": "administrador",
+    }
+    return plural_singular.get(plural, "error")
 
 # Home
 def home(request):
@@ -32,18 +42,58 @@ def home(request):
     })
 
 def usermanage(request):
-    #lista con los usuarios
-    users=User.objects.all()
-    #si es que se seleccionó un usuario
-    selectedUserId=request.GET.get("userid",users[0])
-    selectedUser=User.objects.filter(id=selectedUserId)
-
-    #si es que se está añadiendo un usuario
-    adduser=request.GET.get("addUser",False)
+    #Obtener una lista con los usuarios
+    users=Profile.objects.all()
+    selectedId=request.GET.get("SelectedId",0)
+    selecteduser=User.objects.filter(id=selectedId)
     return render(request,"core/usermanage.html",{
         "users":users,
-        "selectedUser":selectedUser,
-        "adduser":adduser,
+        "selectedUser":selecteduser,
+    })
+
+class AddUserView(CreateView):
+    model=User
+    form_class=UserCreationForm
+    template_name="core/adduser.html"
+    success_url=reverse_lazy("usermanage")
+
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        groups=Group.objects.all()
+        singular_groups = [plural_to_singular(group.name).capitalize() for group in groups]
+        context["groups"]=zip(groups,singular_groups)
+        return context
+    
+    def form_valid(self, form):
+        print("Datos enviados por el formulario:", self.request.POST)
+        # Obtener el grupo que se seleccionó
+        group_id=self.request.POST["group"]
+        group=Group.objects.get(id=group_id)
+        
+        # se crea al usuario sin guardarlo
+        user=form.save(commit=False)
+        #contraseña por defecto
+        user.set_password("contra1234")
+        #convertir a un usuario a staff
+
+        if group_id!=1:
+            user.is_staff=True
+        #se guardann los datos del usuario
+        user.save()
+        #se agrega al grupo seleccionado
+        user.groups.clear()
+        user.groups.add(group)
+
+        return super().form_valid(form)
+    
+
+def test(request):
+    # obtener una lista con los perfiles
+    users=Profile.objects.all()
+    
+    return render(request,"core/test.html",{
+        "users":users,
     })
 
 # Records
