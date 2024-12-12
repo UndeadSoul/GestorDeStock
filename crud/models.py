@@ -25,7 +25,6 @@ class product(models.Model):
     product_stock=models.PositiveIntegerField()
     product_price=models.PositiveIntegerField()
     product_desc=models.CharField(max_length=50)
-    # storage=models.ManyToManyField(storage, verbose_name=("storage"))
     storage=models.ForeignKey(storage, on_delete=models.CASCADE, verbose_name=("storage"), default=1)
 
     def __str__(self):

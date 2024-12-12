@@ -23,8 +23,6 @@ from registerlogin import views as viewsreglog
 from django.contrib.auth.views import LogoutView
 
 
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', viewscore.home, name='home'),
@@ -33,20 +31,16 @@ urlpatterns = [
     path('inventory', viewscore.inventory, name='inventory'),
     path('movestock', viewscore.movestock, name='movestock'),
     path('addstock', viewscore.addStockCreateView.as_view(), name='addstock'),
-    path('addproduct', viewscore.addproduct, name='addproduct'),
+    path('addproduct', viewscore.addProductCreateView.as_view(), name='addproduct'),
     path('removestock', viewscore.removeStockCreateView.as_view(), name='removestock'),
-    # path('confirmremove', viewscore.confirmremove, name='confirmremove'),
     path('finalconfirm', viewscore.finalconfirm, name='finalconfirm'),
     # Relación entre las urls y las views de login/register
     path('accounts/login/', viewsreglog.LoginView.as_view(), name="login"),
-    path('accounts/register/', viewsreglog.register, name="register"),
     path('accounts/logout/', LogoutView.as_view(next_page="login"), name="logout"),
     path('', include("registerlogin.urls")),
 
     # Registro de usuario
     path('adduser/', viewscore.AddUserView.as_view(), name="adduser"),
-
-    path('test', viewscore.test,name="test")
 ]
 
 if settings.DEBUG:

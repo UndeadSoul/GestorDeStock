@@ -1,6 +1,6 @@
 from django import forms
 from crud.models import addMovements, removeMovements
-from crud.models import product
+from crud.models import product, storage
 from registerlogin.models import Profile
 from django.contrib.auth.models import User
 
@@ -34,12 +34,16 @@ class removemov_form(forms.ModelForm):
         return cleaned_data
 
 class addproduct_form(forms.ModelForm):
-    product=forms.ModelChoiceField(queryset=product.objects.all(), label="Producto")
-    incharge=forms.ModelChoiceField(queryset=Profile.objects.all(), label="Encargado")
-    removemov_prodQuantity=forms.IntegerField(label="Cantidad", min_value=1)
+    product_name=forms.CharField(required=True,label="Nombre producto")
+    product_image = forms.ImageField(required=True, label="Imagen de perfil")
+    product_stock = forms.IntegerField(required=True, label="Cantidad", min_value=1)
+    product_price = forms.IntegerField(required=True, label="Precio", min_value=1)
+    product_desc = forms.CharField(max_length=50, label="Descripción")
+    storage=forms.ModelChoiceField(queryset=storage.objects.all(), label="Bodega")
+
     class Meta:
-        model=removeMovements
-        fields=['product','removemov_prodQuantity','incharge']
+        model=product
+        fields=['product_name','product_image','product_stock', 'product_price', 'product_desc','storage']
 
     
 class UserCreationForm(forms.ModelForm):

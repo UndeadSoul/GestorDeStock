@@ -6,7 +6,7 @@ from crud.models import addMovements,removeMovements,employee,storage,product
 from datetime import datetime, timedelta
 from django.db.models import Q
 from django.views.generic import TemplateView,CreateView
-from .forms import addmov_form, removemov_form,UserCreationForm
+from .forms import addmov_form, removemov_form,UserCreationForm,addproduct_form
 from django.contrib import messages
 from registerlogin.models import Profile
 from django.contrib.auth.models import Group
@@ -88,15 +88,6 @@ class AddUserView(CreateView):
 
         return super().form_valid(form)
     
-
-def test(request):
-    # obtener una lista con los perfiles
-    users=Profile.objects.all()
-    
-    return render(request,"core/test.html",{
-        "users":users,
-    })
-
 # Records
 def records(request):
     # Obtener el periodo que se quiere consultar
@@ -211,9 +202,18 @@ class addStockCreateView(CreateView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-def addproduct(request):
-    #? las id se aumentan automatico, así que no es necesario hacer las consuultas
-    return render(request,"core/addproduct.html",{})
+class addProductCreateView(CreateView):
+    model=product
+    form_class=addproduct_form
+    template_name='core/addproduct.html'
+    success_url=reverse_lazy('finalconfirm')
+
+    def form_valid(self,form):
+        messages.success(self.request, "El producto se ha guardado correctamente")
+        return super().form_valid(form)
+    def form_invalid(self,form):
+        messages.success(self.request, "El producto no se ha guardado")
+        return self.render_to_response(self.get_context_data(form=form))
 
 ### Remove stock
 def removestock(request):
@@ -232,26 +232,6 @@ class removeStockCreateView(CreateView):
     def form_invalid(self,form):
         messages.success(self.request, "El movimiento no se ha guardado")
         return self.render_to_response(self.get_context_data(form=form))
-
-
-# def confirmremove(request):
-#     #el html debe hacer la diferencia de si es que queda el stock suficiente
-#     #obtener el id
-#     productid=request.GET.get("id")
-#     #obtener la cantidad
-#     productamount=request.GET.get("amount")
-#     #hay suficiente stock?
-#     selectedprod=product.objects.filter(product_id=productid)
-#     if (selectedprod[0]-productamount)>=0:
-#         stock="yes"
-#     else:
-#         stock="no"
-
-#     return render(request,"core/confirmremove.html",{
-#         "stock":stock,
-#         "selectedprod":selectedprod,
-#         "productamount":productamount,
-#     })
 
 # Confirm
 def finalconfirm(request):
