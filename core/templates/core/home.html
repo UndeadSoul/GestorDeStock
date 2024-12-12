@@ -105,10 +105,13 @@
                 <p><strong>Fono:</strong> {{ userprofile.0.telephone }}</p>
                 <p><strong>Correo Electrónico:</strong> {{ userprofile.0.email }}</p>
                 {% endif %}
-                
+
+                {% if is_admin_or_jefe %}
                 <div >
                     <a class="btn btn-primary" href={% url 'usermanage'%}>Gestion de usuarios</a>
                 </div>
+                {% endif %}
+
             </div>
             
         </div>

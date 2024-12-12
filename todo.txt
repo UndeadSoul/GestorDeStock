@@ -9,9 +9,10 @@
 - separar los estilos de las tablas
 - corregir los estilos para que se vea bonito
 - corregir los estilos para que se vean del mismo tamaño
--------------HACIENDO------------
 - añadir productos
+-------------HACIENDO------------
 ------------Por Hacer------------
+subirlo a un hosting
 -------------Estética------------
 -----------Por el pico-----------
 - poder modificar los datos de un usuarios

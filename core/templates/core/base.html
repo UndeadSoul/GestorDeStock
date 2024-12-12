@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}">
-    <title>{% block title %}{% endblock title %}</title>
+    <title>Gestor de stock - {% block title %}{% endblock title %}</title>
 </head>
 <body>
     {% comment %} navegation {% endcomment %}
@@ -29,8 +29,10 @@
             </div>
         </div>
     </nav>
-    {% if request.user.is_authenticated %}
+    {% if request.user.is_authenticated %}    <!-- V  -->                                          <!-- V  -->
+        
         {% block content %}{% endblock content %}
+
     {% else %}
         {% block logincontent %}{% endblock logincontent %}
     {% endif %}

@@ -23,6 +23,7 @@ def plural_to_singular(plural):
 
 # Home
 def home(request):
+    is_admin_or_jefe = request.user.groups.filter(name__in=['administrador', 'jefes']).exists()
     # Obtener los últimos movimientos
     lastInMovements = addMovements.objects.all().order_by('-addmov_id')[:5]
     lastOutMovements = removeMovements.objects.all().order_by('-removemov_id')[:5]
@@ -38,10 +39,12 @@ def home(request):
         "inmov": lastInMovements,
         "outmov": lastOutMovements,
         "criticalStock": critical,
-        "userprofile":user_profile
+        "userprofile":user_profile,
+        "is_admin_or_jefe":is_admin_or_jefe,
     })
 
 def usermanage(request):
+    is_admin_or_jefe = request.user.groups.filter(name__in=['administrador', 'jefes']).exists()
     #Obtener una lista con los usuarios
     users=Profile.objects.all()
     selectedId=request.GET.get("selectedId",0)
@@ -49,6 +52,7 @@ def usermanage(request):
     return render(request,"core/usermanage.html",{
         "users":users,
         "selectedUser":selecteduser,
+        "is_admin_or_jefe":is_admin_or_jefe,
     })
 
 class AddUserView(CreateView):
@@ -75,6 +79,7 @@ class AddUserView(CreateView):
         if group_id != "1":
             user.is_staff = True
         user.save()
+        user.groups.clear()
         user.groups.add(group)
 
         # Actualizar el perfil asociado

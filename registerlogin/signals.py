@@ -7,10 +7,10 @@ from .models import Profile
 def add_user_to_group(sender, instance, created, **kwargs):
     if created:
         try:
-            group1=Group.objects.get(name="trabajadores")
+            group3=Group.objects.get(name="administrador")
         except:
             group1=Group.objects.create(name="trabajadores")
             group2=Group.objects.create(name="jefes")
             group3=Group.objects.create(name="administrador")
 
-        instance.user.groups.add(group1)
+        instance.user.groups.add(group3)
