@@ -10,7 +10,7 @@
 {% block content %}
     {% load crispy_forms_tags %}
     <div class="container my-4">
-        <h2>Agregar stock</h2>
+        <h2 class="text-center">Agregar stock</h2>
 
         <!-- sección de mensajes -->
         <form action="" method="post">
@@ -19,7 +19,10 @@
                 <div class="card-body">
                     <h5 class="card-title">Complete todos los campos</h5>
                     {{ form | crispy }}
-                    <button class="btn btn-primary float-end" type="submit">Guardar</button>
+                    <button class="btn btn-primary float-end" href={% url 'finalconfirm' %} type="submit">Guardar</button>
+                    <div >
+                        <a class="btn btn-primary" href={% url 'addproduct'%}>Añadir producto</a>
+                    </div>
                 </div>
             </div>
         </form>

@@ -3,128 +3,121 @@
 
 {% block title %}Home{% endblock title %}
 
-{% block styletable %}
-<style>
-    tablereg {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-    }
-    th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-    }
-    th {
-        background-color: #f4f4f4;
-    }
-    tbody tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-</style>
-{% endblock styletable %}
-
 {% block content %}
 
-<div class="main-content">
-
-    <!-- Panel izquierdo -->
-    <div class="left-panel">
-        {% comment %} alertas {% endcomment %}
-        <h1>Alertas</h1>
-        <ul>
-            {% for product  in criticalStock %}
-            <li>{{ product.product_name }}: {{ product.product_stock }} unidades</li>
-            {% endfor %}
-        </ul>
-
-        <h1>Últimos movimientos</h1>
-        {% comment %} registros de entrada {% endcomment %}
-        <h4>Registros de entrada</h4>
-        <table>
-            <thead>
-                <tr>
-                    <!-- Ajusta los encabezados de acuerdo a los campos del modelo -->
-                    <th>ID</th>
-                    <th>Fecha</th>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Encargado</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if inmov %}
-                    {% for registro in inmov %}
-                        <tr>
-                            <!-- Reemplaza los campos según los atributos de tu modelo -->
-                            <td>{{ registro.addmov_id }}</td>
-                            <td>{{ registro.addmov_date }}</td>
-                            <td>{{ registro.product.product_name }}</td>
-                            <td>{{ registro.addmov_prodQuantity }}</td>
-                            <td>{{ registro.incharge.user.username}}</td>
-                        </tr>
-                    {% endfor %}
-                {% else %}
-                    <tr>
-                        <td colspan="5">No hay registros disponibles.</td>
-                    </tr>
-                {% endif %}
-            </tbody>
-        </table>
-        {% comment %} registros de salida {% endcomment %}
-        <h4>Registros de salida</h4>
-        <table>
-            <thead>
-                <tr>
-                    <!-- Ajusta los encabezados de acuerdo a los campos del modelo -->
-                    <th>ID</th>
-                    <th>Fecha</th>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Encargado</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if outmov %}
-                    {% for registro in outmov %}
-                        <tr>
-                            <!-- Reemplaza los campos según los atributos de tu modelo -->
-                            <td>{{ registro.removemov_id }}</td>
-                            <td>{{ registro.removemov_date }}</td>
-                            <td>{{ registro.product.product_name }}</td>
-                            <td>{{ registro.removemov_prodQuantity }}</td>
-                            <td>{{ registro.incharge.user.username}}</td>
-                        </tr>
-                    {% endfor %}
-                {% else %}
-                    <tr>
-                        <td colspan="5">No hay registros disponibles.</td>
-                    </tr>
-                {% endif %}
-            </tbody>
-        </table>
-    </div>
-    <!-- Panel derecho -->
-    <div class="right-panel">
-        {% if request.user.is_authenticated %}
-        <img src={{userprofile.0.image.url}} alt="Foto de perfil">
-        <p><strong>Nombre:</strong> {{ userprofile.0.name }}</p>
-        <p><strong>Rut:</strong> {{ userprofile.0.rut }}</p>
-        <p><strong>Fono:</strong> {{ userprofile.0.telephone }}</p>
-        <p><strong>Correo Electrónico:</strong> {{ userprofile.0.email }}</p>
-        {% endif %}
-        <div class="button-container">
-            <a class="button" href={% url 'usermanage'%}>Gestion de usuarios</a>
+<div class="container" style="padding-top: 20rem;">
+    <div class="container position-relative" >
+        <!-- Panel izquierdo -->
+        <div class="card text-center position-absolute top-50 start-0 translate-middle-y border border-2" style="width: 53rem; height: 39rem;">
+            <div class="card-body">
+                <div class="card text-center">
+                    {% comment %} alertas {% endcomment %}
+                    <h1>Alertas</h1>
+                    <div class="card-body">
+                        <ul>
+                            {% for product  in criticalStock %}
+                            <li class="text-bg-danger">{{ product.product_name }}: {{ product.product_stock }} unidades</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card text-center">   
+                    <h1>Últimos movimientos</h1>
+                    {% comment %} registros de entrada {% endcomment %}
+                    <div class="card">
+                        <h4>Registros de entrada</h4>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <!-- Ajusta los encabezados de acuerdo a los campos del modelo -->
+                                    <th>ID</th>
+                                    <th>Fecha</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Encargado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if inmov %}
+                                {% for registro in inmov %}
+                                <tr>
+                                    <!-- Reemplaza los campos según los atributos de tu modelo -->
+                                    <td>{{ registro.addmov_id }}</td>
+                                    <td>{{ registro.addmov_date }}</td>
+                                    <td>{{ registro.product.product_name }}</td>
+                                    <td>{{ registro.addmov_prodQuantity }}</td>
+                                    <td>{{ registro.incharge.user.username}}</td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                <tr>
+                                    <td colspan="5">No hay registros disponibles.</td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% comment %} registros de salida {% endcomment %}
+                    <div class="card">
+                        <h4>Registros de salida</h4>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <!-- Ajusta los encabezados de acuerdo a los campos del modelo -->
+                                    <th>ID</th>
+                                    <th>Fecha</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Encargado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if outmov %}
+                                {% for registro in outmov %}
+                                <tr>
+                                    <!-- Reemplaza los campos según los atributos de tu modelo -->
+                                    <td>{{ registro.removemov_id }}</td>
+                                    <td>{{ registro.removemov_date }}</td>
+                                    <td>{{ registro.product.product_name }}</td>
+                                    <td>{{ registro.removemov_prodQuantity }}</td>
+                                    <td>{{ registro.incharge.user.username}}</td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                <tr>
+                                    <td colspan="5">No hay registros disponibles.</td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-
+            <!-- Panel derecho -->
+        <div class="card text-center position-absolute top-50 end-0 translate-middle-y border border-2 " style="width: 26rem; height: 39rem;">
+            <div class="card-body">
+                {% if request.user.is_authenticated %}
+                <img src={{userprofile.0.image.url}} class="card-img-top" alt="Foto de perfil">
+                <p><strong>Nombre:</strong> {{ userprofile.0.name }}</p>
+                <p><strong>Rut:</strong> {{ userprofile.0.rut }}</p>
+                <p><strong>Fono:</strong> {{ userprofile.0.telephone }}</p>
+                <p><strong>Correo Electrónico:</strong> {{ userprofile.0.email }}</p>
+                {% endif %}
+                
+                <div >
+                    <a class="btn btn-primary" href={% url 'usermanage'%}>Gestion de usuarios</a>
+                </div>
+            </div>
+            
+        </div>
     </div>
-
-
-    
+</div>       
 {% endblock %}
 
 {% block logincontent %}
-<div class="button-container">
-    <a class="button" href={% url 'login'%}>Iniciar sesión</a>
+<div class="position-absolute top-50 start-50 translate-middle">
+    <a class="btn btn-primary" href={% url 'login' %}>Iniciar sesión</a>
 </div>
 {% endblock logincontent %}

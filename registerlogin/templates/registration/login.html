@@ -2,16 +2,20 @@
 {% load static %}
 
 {% block logincontent %}
-<div>
-    <div class="form-wrapperlogin" style="width: 30rem;">
-        <h1>Iniciar Sesión</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <div class="button-containerlogin">
-                <button type="submit" class="buttonlogin">Iniciar Sesión</button>
+<div class="card position-absolute top-50 start-50 translate-middle" style="width: 25rem; height: 20rem;">
+    <div class="car-body position-relative">
+        <div class="form-wrapperlogin" style="width: 30rem;">
+            <h1>Iniciar Sesión</h1>
+            <div>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="button-containerlogin">
+                        <button type="submit" class="buttonlogin">Iniciar Sesión</button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 {% endblock %}

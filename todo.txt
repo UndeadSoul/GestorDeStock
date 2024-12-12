@@ -5,14 +5,14 @@
 - añadir movimientos de salida con validacion
 - poner un boton en home para añadir usuarios
 - añadir usuarios
--------------HACIENDO------------
-- añadir productos
-------------Por Hacer------------
--------------Estética------------
 - corregir el boton de inicio de sesion
 - separar los estilos de las tablas
 - corregir los estilos para que se vea bonito
 - corregir los estilos para que se vean del mismo tamaño
+-------------HACIENDO------------
+- añadir productos
+------------Por Hacer------------
+-------------Estética------------
 -----------Por el pico-----------
 - poder modificar los datos de un usuarios
 - poder modificar los datos de un producto

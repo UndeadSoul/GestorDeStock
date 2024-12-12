@@ -4,52 +4,100 @@
 {% block title %}Registros{% endblock title %}
 
 {% block content %}
-<div class="container">
-    <h1>Registro de movimientos</h1>
-    <form method="get" action="{% url 'records' %}">
-        <div class="actions-records">
-            <select name="periodoftime" class="dropdown-records">
-                <option value="day">Hoy</option>
-                <option value="week">Última semana</option>
-                <option value="month">Último mes</option>
-                <option value="year">Último año</option>
-                <option value="all">Todos</option>
-            </select>
-            <button type="submit" class="button-report-records">Filtrar</button>
-        </div>
-    </form>
+<div class="container" style="padding-top: 2rem;">
+    <div class="container position-relative">
+        <div class="card text-center border border-2" style="width: 79rem; height: 39rem;">
+            <h1>Registro de movimientos</h1>
+            <form method="get" action="{% url 'records' %}">
+                <div class="dropdown">
+                    <select name="periodoftime" class="btn btn-outline-ligh border border-dark">
+                        <option value="day">Hoy</option>
+                        <option value="week">Última semana</option>
+                        <option value="month">Último mes</option>
+                        <option value="year">Último año</option>
+                        <option value="all">Todos</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                </div>
+            </form>
+                <div class="card position-absolute top-50 start-0 translate-middle-y" style="width: 39rem; height: 26rem;">
+                    <h4>Registros de entrada</h4>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <!-- Ajusta los encabezados de acuerdo a los campos del modelo -->
+                                    <th>ID</th>
+                                    <th>Fecha</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Encargado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if recordsadd %}
+                                {% for record in recordsadd %}
+                                <tr>
+                                    <!-- Reemplaza los campos según los atributos de tu modelo -->
+                                    <td>{{ record.addmov_id }}</td>
+                                    <td>{{ record.addmov_date }}</td>
+                                    <td>{{ record.product.product_name }}</td>
+                                    <td>{{ record.addmov_prodQuantity }}</td>
+                                    <td>{{ record.incharge.user.username}}</td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                <tr>
+                                    <td colspan="5">No hay registros disponibles.</td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-    <div class="table-records">
-        <div class="column-records">
-            <h2>Entrada</h2>
-            {% if recordsadd %}
-                <ul>
-                    {% for record in recordsadd %}
-                        <li>ID: {{ record.addmov_id }} | Cantidad: {{ record.addmov_prodQuantity }} | Fecha: {{ record.addmov_date }}</li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>No hay movimientos de entrada.</p>
-            {% endif %}
-        </div>
-        <div class="column-records">
-            <h2>Salida</h2>
-            {% if recordsremove %}
-                <ul>
-                    {% for record in recordsremove %}
-                        <li>ID: {{ record.removemov_id }} | Cantidad: {{ record.removemov_prodQuantity }} | Fecha: {{ record.removemov_date }}</li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>No hay movimientos de salida.</p>
-            {% endif %}
+                <div class="card position-absolute top-50 end-0 translate-middle-y" style="width: 39rem; height: 26rem;">
+                    <h4>Registros de salida</h4>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <!-- Ajusta los encabezados de acuerdo a los campos del modelo -->
+                                    <th>ID</th>
+                                    <th>Fecha</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Encargado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if recordsremove %}
+                                {% for record in recordsremove %}
+                                <tr>
+                                    <!-- Reemplaza los campos según los atributos de tu modelo -->
+                                    <td>{{ record.removemov_id }}</td>
+                                    <td>{{ record.removemov_date }}</td>
+                                    <td>{{ record.product.product_name }}</td>
+                                    <td>{{ record.removemov_prodQuantity }}</td>
+                                    <td>{{ record.incharge.user.username}}</td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                <tr>
+                                    <td colspan="5">No hay registros disponibles.</td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
         </div>
     </div>
 </div>
 {% endblock content %}
 
 {% block logincontent %}
-<div class="button-container">
-    <a class="button" href={% url 'login'%}>Iniciar sesión</a>
+<div class="position-absolute top-50 start-50 translate-middle">
+    <a class="btn btn-primary" href={% url 'login' %}>Iniciar sesión</a>
 </div>
 {% endblock logincontent %}

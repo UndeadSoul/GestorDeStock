@@ -4,20 +4,31 @@
 {% block title %}Mov.Stock{% endblock title %}
 
 {% block content %}
-
-<div style="padding: 20px;">
-    <h1>Este es el movimiento de stock</h1>
-</div>
-
-<div class="button-container">
-    <a href={% url 'removestock' %} class="button">Remove stock</a>
-    <br>
-    <a href={% url 'addstock' %} class="button">add stock</a>
+<div class="container">
+    <div class="container">
+        <div class="card position-absolute top-50 start-50 translate-middle">
+            <div class="card-body">
+                <div style="padding: 20px;">
+                    <h1>Este es el movimiento de stock</h1>
+                </div>
+                
+                <div class="button-container text-center">
+                    <div>
+                        <a href={% url 'addstock' %} class="btn btn-primary" style="width: 9rem;">add stock</a>
+                    </div>
+                    <br>
+                    <div>
+                        <a href={% url 'removestock' %} class="btn btn-primary" style="width: 9rem;">Remove stock</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock content %}
 
 {% block logincontent %}
-<div class="button-container">
-    <a class="button" href={% url 'login'%}>Iniciar sesión</a>
+<div class="position-absolute top-50 start-50 translate-middle">
+    <a class="btn btn-primary" href={% url 'login' %}>Iniciar sesión</a>
 </div>
 {% endblock logincontent %}

@@ -44,46 +44,47 @@ def home(request):
 def usermanage(request):
     #Obtener una lista con los usuarios
     users=Profile.objects.all()
-    selectedId=request.GET.get("SelectedId",0)
-    selecteduser=User.objects.filter(id=selectedId)
+    selectedId=request.GET.get("selectedId",0)
+    selecteduser=Profile.objects.filter(id=selectedId)
     return render(request,"core/usermanage.html",{
         "users":users,
         "selectedUser":selecteduser,
     })
 
 class AddUserView(CreateView):
-    model=User
-    form_class=UserCreationForm
-    template_name="core/adduser.html"
-    success_url=reverse_lazy("usermanage")
-
+    model = User
+    form_class = UserCreationForm
+    template_name = "core/adduser.html"
+    success_url = reverse_lazy("usermanage")
 
     def get_context_data(self, **kwargs):
-        context=super().get_context_data(**kwargs)
-        groups=Group.objects.all()
+        context = super().get_context_data(**kwargs)
+        groups = Group.objects.all()
         singular_groups = [plural_to_singular(group.name).capitalize() for group in groups]
-        context["groups"]=zip(groups,singular_groups)
+        context["groups"] = zip(groups, singular_groups)
         return context
-    
-    def form_valid(self, form):
-        print("Datos enviados por el formulario:", self.request.POST)
-        # Obtener el grupo que se seleccionó
-        group_id=self.request.POST["group"]
-        group=Group.objects.get(id=group_id)
-        
-        # se crea al usuario sin guardarlo
-        user=form.save(commit=False)
-        #contraseña por defecto
-        user.set_password("contra1234")
-        #convertir a un usuario a staff
 
-        if group_id!=1:
-            user.is_staff=True
-        #se guardann los datos del usuario
+    def form_valid(self, form):
+        # Obtener el grupo seleccionado
+        group_id = self.request.POST.get("group")
+        group = Group.objects.get(id=group_id)
+
+        # Crear el usuario
+        user = form.save(commit=False)
+        user.set_password("contra1234")
+        if group_id != "1":
+            user.is_staff = True
         user.save()
-        #se agrega al grupo seleccionado
-        user.groups.clear()
         user.groups.add(group)
+
+        # Actualizar el perfil asociado
+        profile = user.profile  # Relación OneToOneField
+        profile.rut = form.cleaned_data.get("rut")
+        profile.telephone = form.cleaned_data.get("telephone")
+        profile.name = form.cleaned_data.get("name")
+        profile.image = self.request.FILES.get("image", "users/usuario_defecto.jpg")
+        profile.email=user.email
+        profile.save()
 
         return super().form_valid(form)
     
@@ -200,7 +201,7 @@ class addStockCreateView(CreateView):
     model=addMovements
     form_class=addmov_form
     template_name='core/addstock.html'
-    success_url=reverse_lazy('movestock')
+    success_url=reverse_lazy('finalconfirm')
 
     def form_valid(self,form):
         messages.success(self.request, "El movimiento se ha guardado correctamente")
@@ -220,10 +221,10 @@ def removestock(request):
     return render(request,"core/removestock.html",{})
 
 class removeStockCreateView(CreateView):
-    model=addMovements
+    model=removeMovements
     form_class=removemov_form
     template_name='core/removestock.html'
-    success_url=reverse_lazy('movestock')
+    success_url=reverse_lazy('finalconfirm')
 
     def form_valid(self,form):
         messages.success(self.request, "El movimiento se ha guardado correctamente")
@@ -233,24 +234,24 @@ class removeStockCreateView(CreateView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-def confirmremove(request):
-    #el html debe hacer la diferencia de si es que queda el stock suficiente
-    #obtener el id
-    productid=request.GET.get("id")
-    #obtener la cantidad
-    productamount=request.GET.get("amount")
-    #hay suficiente stock?
-    selectedprod=product.objects.filter(product_id=productid)
-    if (selectedprod[0]-productamount)>=0:
-        stock="yes"
-    else:
-        stock="no"
+# def confirmremove(request):
+#     #el html debe hacer la diferencia de si es que queda el stock suficiente
+#     #obtener el id
+#     productid=request.GET.get("id")
+#     #obtener la cantidad
+#     productamount=request.GET.get("amount")
+#     #hay suficiente stock?
+#     selectedprod=product.objects.filter(product_id=productid)
+#     if (selectedprod[0]-productamount)>=0:
+#         stock="yes"
+#     else:
+#         stock="no"
 
-    return render(request,"core/confirmremove.html",{
-        "stock":stock,
-        "selectedprod":selectedprod,
-        "productamount":productamount,
-    })
+#     return render(request,"core/confirmremove.html",{
+#         "stock":stock,
+#         "selectedprod":selectedprod,
+#         "productamount":productamount,
+#     })
 
 # Confirm
 def finalconfirm(request):

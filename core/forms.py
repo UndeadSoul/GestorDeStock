@@ -21,14 +21,6 @@ class removemov_form(forms.ModelForm):
         model=removeMovements
         fields=['product','removemov_prodQuantity','incharge']
 
-class addproduct_form(forms.ModelForm):
-    product=forms.ModelChoiceField(queryset=product.objects.all(), label="Producto")
-    incharge=forms.ModelChoiceField(queryset=Profile.objects.all(), label="Encargado")
-    removemov_prodQuantity=forms.IntegerField(label="Cantidad", min_value=1)
-    class Meta:
-        model=removeMovements
-        fields=['product','removemov_prodQuantity','incharge']
-
     def clean(self):
         cleaned_data = super().clean()
         product = cleaned_data.get('product')
@@ -40,12 +32,28 @@ class addproduct_form(forms.ModelForm):
                     f"La cantidad a retirar ({removemov_prodQuantity}) no puede ser mayor al stock disponible ({product.product_stock})."
                 )
         return cleaned_data
+
+class addproduct_form(forms.ModelForm):
+    product=forms.ModelChoiceField(queryset=product.objects.all(), label="Producto")
+    incharge=forms.ModelChoiceField(queryset=Profile.objects.all(), label="Encargado")
+    removemov_prodQuantity=forms.IntegerField(label="Cantidad", min_value=1)
+    class Meta:
+        model=removeMovements
+        fields=['product','removemov_prodQuantity','incharge']
+
     
 class UserCreationForm(forms.ModelForm):
-    username=forms.CharField(required=True)
-    first_name=forms.CharField(required=True)
-    last_name=forms.CharField(required=True)
-    email=forms.EmailField(required=True)
+    username = forms.CharField(required=True, label="Nombre de usuario")
+    first_name = forms.CharField(required=True, label="Nombre")
+    last_name = forms.CharField(required=True, label="Apellido")
+    email = forms.EmailField(required=True, label="Correo electrónico")
+
+    # Campos del modelo Profile
+    rut = forms.CharField(required=False, label="RUT")
+    telephone = forms.CharField(required=False, label="Teléfono")
+    name = forms.CharField(required=False, label="Nombre completo")
+    image = forms.ImageField(required=False, label="Imagen de perfil")
+
     class Meta:
-        model=User
-        fields=["username","first_name","last_name","email"]
+        model = User
+        fields = ["username", "first_name", "last_name", "email"]

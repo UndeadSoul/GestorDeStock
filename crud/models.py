@@ -55,3 +55,10 @@ class removeMovements(models.Model):
     # incharge=models.ManyToManyField(employee, on_delete=models.CASCADE, verbose_name=("employee"))
     product=models.ForeignKey(product, on_delete=models.CASCADE, verbose_name=("product"), default=1)
     incharge=models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name=("profile"), default=1)
+
+    def save(self, *args, **kwargs):
+        with transaction.atomic():
+            product=self.product
+            product.product_stock -= self.removemov_prodQuantity
+            product.save()
+            super().save(*args, **kwargs)

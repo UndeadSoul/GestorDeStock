@@ -4,11 +4,60 @@
 {% block title %}Gestionar usuarios{% endblock title %}
 
 {% block content %}
-<div style="padding: 20px;">
-    <h1>Aquí se gestionan los usuarios</h1>
+<div class="container" style="padding-top: 20rem;">
+    <!-- Contenedor principal -->
+    <div class="container position-relative">
+        <!-- Panel izquierdo (Lista de productos) -->
+        <div class="row">
+            <div class="col-4">
+                <nav class="h-100 flex-column align-items-stretch pe-4 border-end">
+                    <nav class="card position-absolute top-50 start-0 translate-middle-y border border-2 nav nav-pills flex-column nav nav-pills flex-column" style="width: 15rem; height: 39rem;">
+                        <h4 class="text-center">Empleados</h4>
+                        <nav class="nav nav-pills flex-column">
+                            <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2 border" tabindex="0">
+                                {% for Profile in users %}
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group">
+                                            <a href="?selectedId={{ Profile.user.id }}" class="list-group-item ">
+                                                {{ Profile.name }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                {% endfor %}
+                            </div>
+                        </nav>
+                    </nav>
+                </nav>
+            </div>
+        </div>
+        <!-- Panel derecho (Detalles del producto) -->
+        <div class="card text-center position-absolute top-50 end-0 translate-middle-y border border-2" style="width: 64rem; height: 39rem;">
+            <div class="card-body">
+                <h2>Empleados</h2>
+                {% if selectedUser %}
+                    <div>
+                        <img src={{selectedUser.0.image.url}} class="card-img-top border" style="width: 15rem; border-radius: 5%; height:15rem" alt="Imagen del empleado">
+                        <p><strong>Nombre:</strong> {{ selectedUser.0.name }}</p>
+                        <p><strong>Rut:</strong> {{ selectedUser.0.rut }}</p>
+                        <p><strong>Fono:</strong> {{ selectedUser.0.telephone}}</p>
+                        <p><strong>Correo Electrónico:</strong> {{ selectedUser.0.email }}</p>
+                    </div>
+                    
+                    {% comment %} <div >
+                        <a class="btn btn-primary" href={% url 'adduser'%}>Añadir usuario</a>
+                    </div> {% endcomment %}
+
+                {% else %}
+                    {{selectedUser}}
+                    <p>Selecciona un usuario para ver los detalles.</p>
+                {% endif %}
+                <div >
+                    <a class="btn btn-primary" href={% url 'adduser'%}>Añadir usuario</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
 {% endblock content %}
 
 {% block logincontent %}

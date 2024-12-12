@@ -3,14 +3,10 @@
 
 {% block title %}Remover Stock{% endblock title %}
 
-{% block style %}
-<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-{% endblock style %}
-
 {% block content %}
     {% load crispy_forms_tags %}
     <div class="container my-4">
-        <h2>Retirar stock</h2>
+        <h2 class="text-center" >Retirar stock</h2>
 
         <!-- sección de mensajes -->
         <form action="" method="post">
@@ -27,7 +23,7 @@
 {% endblock content %}
 
 {% block logincontent %}
-<div class="button-container">
-    <a class="button" href={% url 'login'%}>Iniciar sesión</a>
+<div class="position-absolute top-50 start-50 translate-middle">
+    <a class="btn btn-primary" href={% url 'login' %}>Iniciar sesión</a>
 </div>
 {% endblock logincontent %}

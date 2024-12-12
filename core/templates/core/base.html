@@ -9,40 +9,30 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do" rel="stylesheet">
-
-    <link rel="stylesheet" href="{% static 'core/css/styleaddproduc.css' %}">
-    <link rel="stylesheet" href="{% static 'core/css/stylemovproduc.css' %}">
-    <link rel="stylesheet" href="{% static "core/css/stylerecords.css" %}">
-    <link rel="stylesheet" href="{% static "core/css/styles.css" %}">
-    <link rel="stylesheet" href="{% static 'core/css/styleshome.css' %}">
-    <link rel="stylesheet" href="{% static 'core/css/styleinventory.css' %}">
-    <link rel="stylesheet" href="{% static "core/css/stytleconfirmremove.css" %}">
-    {% block styletable %}{% endblock styletable %}
-    {% block style %}{% endblock style %}
-
+    <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}">
     <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
     {% comment %} navegation {% endcomment %}
-    <nav class="navbar">
-        <a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a>
-        <a href="/records" class="{% if request.path == '/records' %}active{% endif %}">Registros</a>
-        <a href="/inventory" class="{% if request.path == '/inventory' %}active{% endif %}">Inventario</a>
-        <a href="/movestock" class="{% if request.path == '/movestock' %}active{% endif %}">Mover Stock</a>
-        {% if request.user.is_authenticated %}
-        <a class="nav-link" href={% url 'logout' %}>Cerrar sesion</a>
-        {% else %}
-        <a class="nav-link" href={% url 'login'%}>Iniciar sesión</a>
-        {% endif %}
+    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark border-body " data-bs-theme="dark" >
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ">
+                <a href="/" class="nav-link active" aria-current="page">Home</a>
+                <a href="/records" class="nav-link active" aria-current="page">Registros</a>
+                <a href="/inventory" class="nav-link active " aria-current="page">Inventario</a>
+                <a href="/movestock" class="nav-link active " aria-current="page">Mover Stock</a>
+                {% if request.user.is_authenticated %}
+                <a class="btn btn-primary float-end" href={% url 'logout' %}>Cerrar sesion</a>
+                {% else %}
+                <a class="btn btn-primary float-end" href={% url 'login'%}>Iniciar sesión</a>
+                {% endif %}
+            </div>
+        </div>
     </nav>
     {% if request.user.is_authenticated %}
-    {% block content %}
-    {% endblock content %}
+        {% block content %}{% endblock content %}
     {% else %}
-
-    {% block logincontent %}
-    {% endblock logincontent %}
-
+        {% block logincontent %}{% endblock logincontent %}
     {% endif %}
 
 </body>

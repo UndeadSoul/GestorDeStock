@@ -16,7 +16,7 @@
         <div class="col-6 mx-auto">
             <div class="card">
                 <div class="card-body">
-                    <form action="{% url 'adduser' %}" method="post">
+                    <form action="{% url 'adduser' %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="username" class="form-label">Nombre de usuario</label>
@@ -31,6 +31,27 @@
                             <div class="col">
                                 <label for="last_name" class="form-label">Apellido</label>
                                 <input type="text" name="last_name" id="last_name" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <div class="col">
+                                <label for="rut" class="form-label">RUT</label>
+                                <input type="text" name="rut" id="rut" class="form-control" required>
+                            </div>
+                            <div class="col">
+                                <label for="telephone" class="form-label">Teléfono</label>
+                                <input type="text" name="telephone" id="telephone" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col">
+                                <label for="name" class="form-label">Nombre completo</label>
+                                <input type="text" name="name" id="name" class="form-control">
+                            </div>
+                            <div class="col">
+                                <label for="image" class="form-label">Imagen de perfil</label>
+                                <input type="file" name="image" id="image" class="form-control">
                             </div>
                         </div>
 
