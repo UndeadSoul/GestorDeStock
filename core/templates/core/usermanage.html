@@ -40,6 +40,7 @@
                         <img src={{selectedUser.0.image.url}} class="card-img-top border" style="width: 15rem; border-radius: 5%; height:15rem" alt="Imagen del empleado">
                         <p><strong>Nombre:</strong> {{ selectedUser.0.name }}</p>
                         <p><strong>Rut:</strong> {{ selectedUser.0.rut }}</p>
+                        <p><strong>Cargo:</strong> {% for group in algo %}{{group.name}} {% endfor %}</p>
                         <p><strong>Fono:</strong> {{ selectedUser.0.telephone}}</p>
                         <p><strong>Correo Electrónico:</strong> {{ selectedUser.0.email }}</p>
                     </div>

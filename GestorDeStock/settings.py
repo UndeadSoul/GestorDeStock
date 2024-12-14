@@ -89,13 +89,18 @@ WSGI_APPLICATION = 'GestorDeStock.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "bdysbzffapagclf7saxv",
-        "USER": "ut7t0sirsgfb8e5x",
-        "PASSWORD": "tlueWSaShUDCbmSoUveH",
-        "HOST": "bdysbzffapagclf7saxv-mysql.services.clever-cloud.com",
-        "PORT": "3306",
+    # "default": {
+    #     "ENGINE": "django.db.backends.mysql",
+    #     "NAME": "bdysbzffapagclf7saxv",
+    #     "USER": "ut7t0sirsgfb8e5x",
+    #     "PASSWORD": "tlueWSaShUDCbmSoUveH",
+    #     "HOST": "bdysbzffapagclf7saxv-mysql.services.clever-cloud.com",
+    #     "PORT": "3306",
+    # }
+
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

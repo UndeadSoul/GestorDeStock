@@ -11,9 +11,10 @@
 - corregir los estilos para que se vean del mismo tamaño
 - añadir productos
 -------------HACIENDO------------
+notificaciones por correo
 ------------Por Hacer------------
 subirlo a un hosting
 -------------Estética------------
------------Por el pico-----------
+-----------Por el-----------
 - poder modificar los datos de un usuarios
 - poder modificar los datos de un producto

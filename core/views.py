@@ -49,10 +49,14 @@ def usermanage(request):
     users=Profile.objects.all()
     selectedId=request.GET.get("selectedId",0)
     selecteduser=Profile.objects.filter(id=selectedId)
+    selected=User.objects.get(id=selectedId)
+    algo=selected.groups.all()
+    
     return render(request,"core/usermanage.html",{
         "users":users,
         "selectedUser":selecteduser,
         "is_admin_or_jefe":is_admin_or_jefe,
+        "algo":algo
     })
 
 class AddUserView(CreateView):
