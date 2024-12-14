@@ -2,10 +2,10 @@
 
 {% block title %}Añadir usuario{% endblock title %}
 
-
 {% block content %}
+{% if is_admin_or_jefe %}
 <div class="container my-4">
-    <h2>Crear Nuevo Usuario</h2>
+    <h2 class="p-3 text-center">Crear Nuevo Usuario</h2>
     {% if messages %}
         {% for message in messages %}
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -75,7 +75,6 @@
 
                             </div>
                         </div>
-
                         <button type="submit" class="btn btn-primary">Crear Usuario</button>
                     </form>
                 </div>
@@ -83,5 +82,17 @@
         </div>
     </div>
 </div>
-
+{% else %}
+<div class="container text-center">
+    <br><br><br><br><br><br>
+    <h1>Usted no tiene permisos para entrar</h1>
+    <a class="btn btn-primary position-absolute top-50 start-50 translate-middle" href={% url 'home' %}>Volver al inicio</a>
+</div>
+{% endif %}
 {% endblock %}
+
+{% block logincontent %}
+<div class="button-container">
+    <a class="button" href={% url 'login'%}>Iniciar sesión</a>
+</div>
+{% endblock logincontent %}

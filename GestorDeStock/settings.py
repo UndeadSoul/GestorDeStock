@@ -89,19 +89,28 @@ WSGI_APPLICATION = 'GestorDeStock.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    # "default": {
-    #     "ENGINE": "django.db.backends.mysql",
-    #     "NAME": "bdysbzffapagclf7saxv",
-    #     "USER": "ut7t0sirsgfb8e5x",
-    #     "PASSWORD": "tlueWSaShUDCbmSoUveH",
-    #     "HOST": "bdysbzffapagclf7saxv-mysql.services.clever-cloud.com",
-    #     "PORT": "3306",
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "bb2ajhk7yesfnzrpwus9",
+        "USER": "uh053soqi5rxrmjs",
+        "PASSWORD": "rSMEqcVgDYZjCZ4k6c4U",
+        "HOST": "bb2ajhk7yesfnzrpwus9-mysql.services.clever-cloud.com",
+        "PORT": "3306",
+    }
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
 
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    # "default": {
+    #     "ENGINE": "django.db.backends.mysql",
+    #     "NAME": "railway",
+    #     "USER": "root",
+    #     "PASSWORD": "lOYfvufxVAsnankLdKmjsMWtJiZfwibY",
+    #     "HOST": "junction.proxy.rlwy.net",
+    #     "PORT": "56240",
+    # }
 }
 
 

@@ -10,8 +10,8 @@
         <!-- Panel izquierdo -->
         <div class="card text-center position-absolute top-50 start-0 translate-middle-y border border-2" style="width: 53rem; height: 39rem;">
             <div class="card-body">
+                {% comment %} alertas {% endcomment %}
                 <div class="card text-center">
-                    {% comment %} alertas {% endcomment %}
                     <h1>Alertas</h1>
                     <div class="card-body">
                         <ul>
@@ -24,73 +24,78 @@
                 
                 <div class="card text-center">   
                     <h1>Últimos movimientos</h1>
-                    {% comment %} registros de entrada {% endcomment %}
-                    <div class="card">
-                        <h4>Registros de entrada</h4>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <!-- Ajusta los encabezados de acuerdo a los campos del modelo -->
-                                    <th>ID</th>
-                                    <th>Fecha</th>
-                                    <th>Producto</th>
-                                    <th>Cantidad</th>
-                                    <th>Encargado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% if inmov %}
-                                {% for registro in inmov %}
-                                <tr>
-                                    <!-- Reemplaza los campos según los atributos de tu modelo -->
-                                    <td>{{ registro.addmov_id }}</td>
-                                    <td>{{ registro.addmov_date }}</td>
-                                    <td>{{ registro.product.product_name }}</td>
-                                    <td>{{ registro.addmov_prodQuantity }}</td>
-                                    <td>{{ registro.incharge.user.username}}</td>
-                                </tr>
-                                {% endfor %}
-                                {% else %}
-                                <tr>
-                                    <td colspan="5">No hay registros disponibles.</td>
-                                </tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
+                    {% comment %} Registros de entrada {% endcomment %}
+                    <div class="card mb-3" style="height: 200px;">
+                        <h4 class="p-2">Registros de entrada</h4>
+                        <div class="table-responsive" style="height: 170px; overflow-y: auto;">
+                            <table class="table table-striped">
+                                <thead class="table-light" style="position: sticky; top: 0; z-index: 1020;">
+                                    <tr>
+                                        <!-- Ajusta los encabezados de acuerdo a los campos del modelo -->
+                                        <th>ID</th>
+                                        <th>Fecha</th>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Encargado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if inmov %}
+                                    {% for registro in inmov %}
+                                    <tr>
+                                        <!-- Reemplaza los campos según los atributos de tu modelo -->
+                                        <td>{{ registro.addmov_id }}</td>
+                                        <td>{{ registro.addmov_date }}</td>
+                                        <td>{{ registro.product.product_name }}</td>
+                                        <td>{{ registro.addmov_prodQuantity }}</td>
+                                        <td>{{ registro.incharge.user.username }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% else %}
+                                    <tr>
+                                        <td colspan="5">No hay registros disponibles.</td>
+                                    </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    {% comment %} registros de salida {% endcomment %}
-                    <div class="card">
-                        <h4>Registros de salida</h4>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <!-- Ajusta los encabezados de acuerdo a los campos del modelo -->
-                                    <th>ID</th>
-                                    <th>Fecha</th>
-                                    <th>Producto</th>
-                                    <th>Cantidad</th>
-                                    <th>Encargado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% if outmov %}
-                                {% for registro in outmov %}
-                                <tr>
-                                    <!-- Reemplaza los campos según los atributos de tu modelo -->
-                                    <td>{{ registro.removemov_id }}</td>
-                                    <td>{{ registro.removemov_date }}</td>
-                                    <td>{{ registro.product.product_name }}</td>
-                                    <td>{{ registro.removemov_prodQuantity }}</td>
-                                    <td>{{ registro.incharge.user.username}}</td>
-                                </tr>
-                                {% endfor %}
-                                {% else %}
-                                <tr>
-                                    <td colspan="5">No hay registros disponibles.</td>
-                                </tr>
-                                {% endif %}
-                            </tbody>
-                        </table>
+                
+                    {% comment %} Registros de salida {% endcomment %}
+                    <div class="card" style="height: 200px;">
+                        <h4 class="p-2">Registros de salida</h4>
+                        <div class="table-responsive" style="height: 170px; overflow-y: auto;">
+                            <table class="table table-striped">
+                                <thead class="table-light" style="position: sticky; top: 0; z-index: 1020;">
+                                    <tr>
+                                        <!-- Ajusta los encabezados de acuerdo a los campos del modelo -->
+                                        <th>ID</th>
+                                        <th>Fecha</th>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Encargado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if outmov %}
+                                    {% for registro in outmov %}
+                                    <tr>
+                                        <!-- Reemplaza los campos según los atributos de tu modelo -->
+                                        <td>{{ registro.removemov_id }}</td>
+                                        <td>{{ registro.removemov_date }}</td>
+                                        <td>{{ registro.product.product_name }}</td>
+                                        <td>{{ registro.removemov_prodQuantity }}</td>
+                                        <td>{{ registro.incharge.user.username }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% else %}
+                                    <tr>
+                                        <td colspan="5">No hay registros disponibles.</td>
+                                    </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

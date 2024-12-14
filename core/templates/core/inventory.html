@@ -12,22 +12,20 @@
         <div class="row">
             <div class="col-4">
                 <nav class="h-100 flex-column align-items-stretch pe-4 border-end">
-                    <nav class="card position-absolute top-50 start-0 translate-middle-y border border-2 nav nav-pills flex-column nav nav-pills flex-column" style="width: 15rem; height: 39rem;">
-                        <h4 class="text-center">Productos</h4>
-                        <nav class="nav nav-pills flex-column">
-                            <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2 border" tabindex="0">
+                    <div class="card position-absolute top-50 start-0 translate-middle-y border border-2" style="width: 15rem; height: 39rem;">
+                        <h4 class="text-center p-3">Productos</h4>
+                        <div class="table-responsive" style="height: calc(39rem - 5rem); overflow-y: auto;">
+                            <ul class="list-group list-group-flush">
                                 {% for product in products %}
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group">
-                                            <a href="?selectedId={{ product.product_id }}" class="list-group-item {% if product.product_stock <= 5 %}text-bg-danger{% endif %}">
-                                                {{ product.product_name }}
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <li class="list-group-item">
+                                        <a href="?selectedId={{ product.product_id }}" class="list-group-item {% if product.product_stock <= 5 %}text-bg-danger{% endif %}">
+                                            {{ product.product_name }}
+                                        </a>
+                                    </li>
                                 {% endfor %}
-                            </div>
-                        </nav>
-                    </nav>
+                            </ul>
+                        </div>
+                    </div>
                 </nav>
             </div>
         </div>

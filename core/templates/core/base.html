@@ -29,13 +29,17 @@
             </div>
         </div>
     </nav>
-    {% if request.user.is_authenticated %}    <!-- V  -->                                          <!-- V  -->
+    {% if request.user.is_authenticated %}
         
         {% block content %}{% endblock content %}
 
     {% else %}
         {% block logincontent %}{% endblock logincontent %}
     {% endif %}
+
+    <!-- JS Bootstrap -->
+
+    <script src="{% static 'core/css/bootstrap.min.css' %}"></script>
 
 </body>
 </html>

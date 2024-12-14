@@ -48,7 +48,7 @@ def usermanage(request):
     is_admin_or_jefe = request.user.groups.filter(name__in=['administrador', 'jefes']).exists()
     #Obtener una lista con los usuarios
     users=Profile.objects.all()
-    selectedId=request.GET.get("selectedId",0)
+    selectedId=request.GET.get("selectedId",users[0].id)
     selecteduser=Profile.objects.filter(id=selectedId)
     selected=User.objects.get(id=selectedId)
     algo=selected.groups.all()
@@ -71,6 +71,8 @@ class AddUserView(CreateView):
         groups = Group.objects.all()
         singular_groups = [plural_to_singular(group.name).capitalize() for group in groups]
         context["groups"] = zip(groups, singular_groups)
+        is_admin_or_jefe= self.request.user.groups.filter(name__in=['administrador', 'jefes']).exists()
+        context["is_admin_or_jefe"] = is_admin_or_jefe
         return context
 
     def form_valid(self, form):
@@ -178,21 +180,25 @@ def records(request):
         message="Movimientos de entrada:\n"
         for record in recordsadd:
             message+=" - [{}] {}: {} {} {}\n".format(record.addmov_date.strftime("%d/%m/%Y %H:%M:%S"), "Entrada", record.addmov_prodQuantity, record.product.product_name,record.incharge.name)
-        message+="\n"
+        message+="\nMovimientos de salida\n"
         for record in recordsremove:
             message+=" - [{}] {}: {} {} {}\n".format(record.removemov_date.strftime("%d/%m/%Y %H:%M:%S"), "Salida", record.removemov_prodQuantity, record.product.product_name,record.incharge.name)
 
         email=EmailMessage(
             "Registros de Movimientos - {} / {}".format(period_start,period_end),
             "Mensaje enviado por {} <{}>:\n\n{}".format(user_profile.name,user_profile.email,message),
+            #sender
+            "{}".format(user_profile.email),
             #destinatario
             ["c986c7998ae9f6@inbox.mailtrap.io",user_profile.email]
         )
         try:
             email.send()
-            return redirect("finalconfim")
+            print("se mandó")
+            return redirect(reverse_lazy("finalconfirm"))
         except:
-            return redirect("finalconfim")
+            print("no se mandó")
+            return redirect(reverse_lazy("finalconfirm"))
 
 
     return render(request,"core/records.html",{
