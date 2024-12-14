@@ -61,3 +61,9 @@ class removeMovements(models.Model):
             product.product_stock -= self.removemov_prodQuantity
             product.save()
             super().save(*args, **kwargs)
+
+# class sendedMails(models.Model):
+#     emailDate=models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return "Mandado"+self.emailDate

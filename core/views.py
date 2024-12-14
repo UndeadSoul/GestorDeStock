@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
@@ -10,6 +10,7 @@ from .forms import addmov_form, removemov_form,UserCreationForm,addproduct_form
 from django.contrib import messages
 from registerlogin.models import Profile
 from django.contrib.auth.models import Group
+from django.core.mail import EmailMessage
 
 # FUNCION PARA CONVERTIR EL PLURAL DE UN GRUPO A SU SINGULAR
 def plural_to_singular(plural):
@@ -105,11 +106,11 @@ def records(request):
     if period=="day":
         # Obtener el rango del día de hoy
         today = datetime.now()
-        day_start = datetime.combine(today.date(), datetime.min.time())  # 00:00:00
-        day_end = datetime.combine(today.date(), datetime.max.time())    # 23:59:59
+        period_start = datetime.combine(today.date(), datetime.min.time())  # 00:00:00
+        period_end = datetime.combine(today.date(), datetime.max.time())    # 23:59:59
         #filtrar los registros de hoy
-        recordsoftodayadd=addMovements.objects.filter(addmov_date__range=(day_start, day_end)).order_by('-addmov_date')
-        recordsoftodayremove=removeMovements.objects.filter(removemov_date__range=(day_start, day_end)).order_by('-removemov_date')
+        recordsoftodayadd=addMovements.objects.filter(addmov_date__range=(period_start, period_end)).order_by('-addmov_date')
+        recordsoftodayremove=removeMovements.objects.filter(removemov_date__range=(period_start, period_end)).order_by('-removemov_date')
         recordsadd=recordsoftodayadd
         recordsremove=recordsoftodayremove
         print("add",recordsadd)
@@ -119,6 +120,8 @@ def records(request):
         #obtener fecha de hace una semana
         today=datetime.now().date()
         lastweek=today-timedelta(days=7)
+        period_start=today
+        period_start=lastweek
         #filtrar los registros de la ultima semana
         recordsoflastweekadd=addMovements.objects.filter(addmov_date__gte=lastweek).order_by('-addmov_date')
         recordsoflastweekremove=removeMovements.objects.filter(removemov_date__gte=lastweek).order_by('-removemov_date')
@@ -129,6 +132,8 @@ def records(request):
         #obtener fecha de hace un mes
         today=datetime.now().date()
         lastmonth=today-timedelta(days=31)
+        period_start=today
+        period_end=lastmonth
         #filtrar los registros del ultimo mes
         recordsoflastmonthadd=addMovements.objects.filter(addmov_date__gte=lastmonth).order_by('-addmov_date')
         recordsoflastmonthremove=removeMovements.objects.filter(removemov_date__gte=lastmonth).order_by('-removemov_date')
@@ -139,6 +144,8 @@ def records(request):
         #obtener fecha de hace un año
         today=datetime.now().date()
         lastyear=today-timedelta(days=365)
+        period_start=today
+        period_end=lastyear
         #filtrar los registros del ultimo año
         recordsoflastyearadd=addMovements.objects.filter(addmov_date__gte=lastyear).order_by('-addmov_date')
         recordsoflastyearremove=removeMovements.objects.filter(removemov_date__gte=lastyear).order_by('-removemov_date')
@@ -147,20 +154,46 @@ def records(request):
 
     elif period=="all":
         #obtener todos los registros
+        today = datetime.now()
+        period_start=today
+        period_end="Inicio"
         recordsadd=addMovements.objects.all()
         recordsremove=removeMovements.objects.all()
 
     else: 
 # Obtener el rango del día de hoy
         today = datetime.now()
-        day_start = datetime.combine(today.date(), datetime.min.time())  # 00:00:00
-        day_end = datetime.combine(today.date(), datetime.max.time())    # 23:59:59
+        period_start = datetime.combine(today.date(), datetime.min.time())  # 00:00:00
+        period_end = datetime.combine(today.date(), datetime.max.time())    # 23:59:59
         #filtrar los registros de hoy
-        recordsoftodayadd=addMovements.objects.filter(addmov_date__range=(day_start, day_end)).order_by('-addmov_date')
-        recordsoftodayremove=removeMovements.objects.filter(removemov_date__range=(day_start, day_end)).order_by('-removemov_date')
+        recordsoftodayadd=addMovements.objects.filter(addmov_date__range=(period_start, period_end)).order_by('-addmov_date')
+        recordsoftodayremove=removeMovements.objects.filter(removemov_date__range=(period_start, period_end)).order_by('-removemov_date')
         recordsadd=recordsoftodayadd
         recordsremove=recordsoftodayremove
-        pass
+
+    if request.method=="POST":
+        #obtener los datos del usuario activo
+        user_profile = Profile.objects.get(user=request.user)
+        #realizar formato de email
+        message="Movimientos de entrada:\n"
+        for record in recordsadd:
+            message+=" - [{}] {}: {} {} {}\n".format(record.addmov_date.strftime("%d/%m/%Y %H:%M:%S"), "Entrada", record.addmov_prodQuantity, record.product.product_name,record.incharge.name)
+        message+="\n"
+        for record in recordsremove:
+            message+=" - [{}] {}: {} {} {}\n".format(record.removemov_date.strftime("%d/%m/%Y %H:%M:%S"), "Salida", record.removemov_prodQuantity, record.product.product_name,record.incharge.name)
+
+        email=EmailMessage(
+            "Registros de Movimientos - {} / {}".format(period_start,period_end),
+            "Mensaje enviado por {} <{}>:\n\n{}".format(user_profile.name,user_profile.email,message),
+            #destinatario
+            ["c986c7998ae9f6@inbox.mailtrap.io",user_profile.email]
+        )
+        try:
+            email.send()
+            return redirect("finalconfim")
+        except:
+            return redirect("finalconfim")
+
 
     return render(request,"core/records.html",{
         "recordsadd":recordsadd,
@@ -236,7 +269,45 @@ class removeStockCreateView(CreateView):
     success_url=reverse_lazy('finalconfirm')
 
     def form_valid(self,form):
+        #obtener el producto del que se hace el movimiento
+        movement=form.instance
+        product=movement.product
+        prodquant=movement.removemov_prodQuantity
+        #obtener el restante del producto
+        updatedStock=product.product_stock-prodquant
+        #si el restante del producto es <=5 mandar un mensaje
+        if updatedStock<=5:
+            #obtener los datos del usuario activo
+            user_profile = Profile.objects.get(user=self.request.user)
+            #realizar formato de email
+            message="El siguiente producto se encuentra con stock crítico\n"
+            #obtener los perfiles con rango de jefe
+            # Obtener el grupo "jefes"
+            jefes_group = Group.objects.get(name="jefes")
+            # Filtrar perfiles cuyos usuarios estén en el grupo "jefes"
+            jefes_profiles = Profile.objects.filter(user__groups=jefes_group)
+            # Obtener los correos de los perfiles
+            emails = jefes_profiles.values_list('email', flat=True)
+            # Mensaje 
+            message+="Nombre producto: {}\nStock restante: {}\nDescripción: \n{}\n".format(product.product_name,updatedStock,product.product_desc)
+            email=EmailMessage(
+                #asunto
+                "Alerta de stock - {}".format(datetime.now().strftime("%d/%m/%Y %H:%M:%S")),
+                #cuerpo
+                "Mensaje enviado por {} <{}>:\n\n{}".format(user_profile.name,user_profile.email,message),
+                #sender
+                "{}".format(user_profile.email),
+                #destinatario
+                ["c986c7998ae9f6@inbox.mailtrap.io",user_profile.email]+list(emails)
+            )
+            try:
+                email.send()
+                print("El correo se mandó")
+            except:
+                print("El correo no se mandó")
+                pass
         messages.success(self.request, "El movimiento se ha guardado correctamente")
+
         return super().form_valid(form)
     def form_invalid(self,form):
         messages.success(self.request, "El movimiento no se ha guardado")
