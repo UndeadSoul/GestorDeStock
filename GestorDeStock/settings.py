@@ -90,12 +90,12 @@ WSGI_APPLICATION = 'GestorDeStock.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "bb2ajhk7yesfnzrpwus9",
-        "USER": "uh053soqi5rxrmjs",
-        "PASSWORD": "rSMEqcVgDYZjCZ4k6c4U",
-        "HOST": "bb2ajhk7yesfnzrpwus9-mysql.services.clever-cloud.com",
-        "PORT": "3306",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "bpi003rgq0hkubshw2de",
+        "USER": "u65rcvmct6fvosvdrklt",
+        "PASSWORD": "hHpmL6H3FobWhOIj4qbOhk5azgxzv1",
+        "HOST": "bpi003rgq0hkubshw2de-postgresql.services.clever-cloud.com",
+        "PORT": "50013",
     }
 
     # 'default': {
@@ -103,14 +103,6 @@ DATABASES = {
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
 
-    # "default": {
-    #     "ENGINE": "django.db.backends.mysql",
-    #     "NAME": "railway",
-    #     "USER": "root",
-    #     "PASSWORD": "lOYfvufxVAsnankLdKmjsMWtJiZfwibY",
-    #     "HOST": "junction.proxy.rlwy.net",
-    #     "PORT": "56240",
-    # }
 }
 
 
