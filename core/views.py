@@ -68,7 +68,7 @@ class AddUserView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        groups = Group.objects.filter(name__in=["administrador","jefes"])
+        groups = Group.objects.filter(name__in=["trabajadores","jefes"])
         singular_groups = [plural_to_singular(group.name).capitalize() for group in groups]
         context["groups"] = zip(groups, singular_groups)
         #obtener si es admin o jefe
@@ -83,7 +83,7 @@ class AddUserView(CreateView):
 
         # Crear el usuario
         user = form.save(commit=False)
-        #generar contraseña
+        #TODO generar contraseña
 
         user.set_password("contra1234")
         if group_id != "1":
@@ -100,8 +100,22 @@ class AddUserView(CreateView):
         profile.image = self.request.FILES.get("image", "users/usuario_defecto.jpg")
         profile.email=user.email
         profile.save()
-        #email contraseña
-
+        #TODO email contraseña
+        # email=EmailMessage(
+        #     "Usuario {} creado para Gestor de stock".format(form.cleaned_data.get("username")),
+        #     "Mensaje enviado por Sistema <Gestor de Stock>:\n\n{}".format(user_profile.name,user_profile.email,message),
+        #     #sender
+        #     "{}".format(user_profile.email),
+        #     #destinatario
+        #     ["c986c7998ae9f6@inbox.mailtrap.io",user_profile.email]
+        # )
+        # try:
+        #     email.send()
+        #     print("se mandó")
+        #     return redirect(reverse_lazy("finalconfirm"))
+        # except:
+        #     print("no se mandó")
+        #     return redirect(reverse_lazy("finalconfirm"))
         
         return super().form_valid(form)
     
