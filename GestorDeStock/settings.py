@@ -20,12 +20,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+#!SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = "2b3fc96558f385896227ca6a5ceea69c"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG","False").lower() == "true"
+#! DEBUG = os.environ.get("DEBUG","False").lower() == "true"
+DEBUG = True
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split()
+#! ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split()
+ALLOWED_HOSTS = ["localhost","127.0.0.1"]
 
 #Se establecen las direcciones url útiles para el login
 LOGIN_URL = 'accounts/login/'
@@ -47,6 +50,9 @@ INSTALLED_APPS = [
     'registerlogin.apps.RegisterloginConfig',
     'core',
     'crud',
+    'cloudinary',
+    'cloudinary_storage'
+
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS="bootstrap5"
@@ -87,16 +93,16 @@ WSGI_APPLICATION = 'GestorDeStock.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
 }
 
-database_url=os.environ.get("DATABASE_URL")
-DATABASES["default"]=dj_database_url.parse(database_url) 
+DATABASES["default"]=dj_database_url.parse("postgresql://gestordestock_django_render_user:ehmMD0TzTeGTQKfuuEGIit48SSDTbT1e@dpg-ctfns2tds78s73ds7jk0-a.oregon-postgres.render.com/gestordestock_django_render")
 
-#postgresql://gestordestock_django_render_user:ehmMD0TzTeGTQKfuuEGIit48SSDTbT1e@dpg-ctfns2tds78s73ds7jk0-a.oregon-postgres.render.com/gestordestock_django_render
+#! database_url=os.environ.get("DATABASE_URL")
+#! DATABASES["default"]=dj_database_url.parse(database_url) 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -139,14 +145,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'ddfknxf4e',
-    'API_KEY': '134257624117458',
-    'API_SECRET': 'Rck3TUAsBHF1Vul9SYqJkvZtYz4',
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'ddfknxf4e'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', "731293374554384"),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', 'uyrCSmro4jFtB5IXn1u0dcEMhto'),
 }
 
-MEDIA_URL='https://res.cloudinary.com/ddfknxf4e/image/upload/'
-MEDIA_ROOT=os.path.join(BASE_DIR,"media")
 
 # Looking to send emails in production? Check out our Email API/SMTP product!
 EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
