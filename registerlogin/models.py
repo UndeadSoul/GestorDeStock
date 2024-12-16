@@ -7,7 +7,7 @@ from django.db.models.signals import post_save
 class Profile(models.Model):
 
     user=models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile",verbose_name="Usuario")
-    image=models.ImageField(default="users/usuario_defecto.jpg", upload_to="users/",verbose_name="Imagen de perfil")
+    image=models.ImageField(default="usuario_defecto.jpg",verbose_name="Imagen de perfil")
     rut=models.CharField(max_length=12,null=True,blank=True,verbose_name="Rut")
     name=models.CharField(max_length=50,null=True,blank=True,verbose_name="Nombre")
     email=models.EmailField(max_length=254, verbose_name="Correo")

@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import dj_database_url
 from pathlib import Path
 import os
 
@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-4f+5fp%mcjlp$b-i6vc+x@zm%k!um1r_!rhv-ixqgckw!pl$7y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.vercel.app','localhost','127.0.0.1']
+ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
 #Se establecen las direcciones url útiles para el login
 LOGIN_URL = 'accounts/login/'
@@ -89,22 +89,17 @@ WSGI_APPLICATION = 'GestorDeStock.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "bpi003rgq0hkubshw2de",
-        "USER": "u65rcvmct6fvosvdrklt",
-        "PASSWORD": "hHpmL6H3FobWhOIj4qbOhk5azgxzv1",
-        "HOST": "bpi003rgq0hkubshw2de-postgresql.services.clever-cloud.com",
-        "PORT": "50013",
-    }
 
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 
 }
 
+DATABASES["default"]=dj_database_url.parse("postgresql://gestordestock_django_render_user:ehmMD0TzTeGTQKfuuEGIit48SSDTbT1e@dpg-ctfns2tds78s73ds7jk0-a.oregon-postgres.render.com/gestordestock_django_render") 
+
+#postgresql://gestordestock_django_render_user:ehmMD0TzTeGTQKfuuEGIit48SSDTbT1e@dpg-ctfns2tds78s73ds7jk0-a.oregon-postgres.render.com/gestordestock_django_render
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -130,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es-es'
 
-TIME_ZONE = 'America/santiago'
+TIME_ZONE = 'America/Santiago'
 
 USE_I18N = True
 
@@ -140,7 +135,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
