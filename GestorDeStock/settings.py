@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4f+5fp%mcjlp$b-i6vc+x@zm%k!um1r_!rhv-ixqgckw!pl$7y'
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get("DEBUG","False").lower() == "true"
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1']
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split()
 
 #Se establecen las direcciones url útiles para el login
 LOGIN_URL = 'accounts/login/'
@@ -97,7 +97,8 @@ DATABASES = {
 
 }
 
-DATABASES["default"]=dj_database_url.parse("postgresql://gestordestock_django_render_user:ehmMD0TzTeGTQKfuuEGIit48SSDTbT1e@dpg-ctfns2tds78s73ds7jk0-a.oregon-postgres.render.com/gestordestock_django_render") 
+database_url=os.environ.get("DATABASE_URL")
+DATABASES["default"]=dj_database_url.parse(database_url) 
 
 #postgresql://gestordestock_django_render_user:ehmMD0TzTeGTQKfuuEGIit48SSDTbT1e@dpg-ctfns2tds78s73ds7jk0-a.oregon-postgres.render.com/gestordestock_django_render
 
