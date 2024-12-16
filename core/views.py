@@ -123,7 +123,7 @@ def records(request):
         today=datetime.now().date()
         lastweek=today-timedelta(days=7)
         period_start=today
-        period_start=lastweek
+        period_end=lastweek
         #filtrar los registros de la ultima semana
         recordsoflastweekadd=addMovements.objects.filter(addmov_date__gte=lastweek).order_by('-addmov_date')
         recordsoflastweekremove=removeMovements.objects.filter(removemov_date__gte=lastweek).order_by('-removemov_date')
