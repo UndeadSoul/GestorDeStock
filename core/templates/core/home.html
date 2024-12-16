@@ -104,7 +104,7 @@
         <div class="card text-center position-absolute top-50 end-0 translate-middle-y border border-2 " style="width: 26rem; height: 39rem;">
             <div class="card-body">
                 {% if request.user.is_authenticated %}
-                <img src={{userprofile.0.image.url}} class="card-img-top" alt="Foto de perfil">
+                <img src={{userprofile.0.image.url}} class="card-img-top" style="width: 15rem; border-radius: 5%; height:15rem" alt="Foto de perfil">
                 <p><strong>Nombre:</strong> {{ userprofile.0.name }}</p>
                 <p><strong>Rut:</strong> {{ userprofile.0.rut }}</p>
                 <p><strong>Fono:</strong> {{ userprofile.0.telephone }}</p>

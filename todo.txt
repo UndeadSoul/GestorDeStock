@@ -10,10 +10,13 @@
 - corregir los estilos para que se vea bonito
 - corregir los estilos para que se vean del mismo tamaño
 - añadir productos
+- notificaciones por correo
+- subirlo a un hosting
 -------------HACIENDO------------
-notificaciones por correo
 ------------Por Hacer------------
-subirlo a un hosting
+- correo con credenciales
+- admin tiene staff y superuser
+- contraseña "aleatoria"
 -------------Estética------------
 -----------Por el-----------
 - poder modificar los datos de un usuarios

@@ -68,9 +68,10 @@ class AddUserView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        groups = Group.objects.all()
+        groups = Group.objects.filter(name__in=["administrador","jefes"])
         singular_groups = [plural_to_singular(group.name).capitalize() for group in groups]
         context["groups"] = zip(groups, singular_groups)
+        #obtener si es admin o jefe
         is_admin_or_jefe= self.request.user.groups.filter(name__in=['administrador', 'jefes']).exists()
         context["is_admin_or_jefe"] = is_admin_or_jefe
         return context
@@ -82,6 +83,8 @@ class AddUserView(CreateView):
 
         # Crear el usuario
         user = form.save(commit=False)
+        #generar contraseña
+
         user.set_password("contra1234")
         if group_id != "1":
             user.is_staff = True
@@ -97,7 +100,9 @@ class AddUserView(CreateView):
         profile.image = self.request.FILES.get("image", "users/usuario_defecto.jpg")
         profile.email=user.email
         profile.save()
+        #email contraseña
 
+        
         return super().form_valid(form)
     
 # Records
