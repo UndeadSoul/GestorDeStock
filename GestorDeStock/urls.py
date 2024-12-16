@@ -38,6 +38,7 @@ urlpatterns = [
     path('accounts/login/', viewsreglog.LoginView.as_view(), name="login"),
     path('accounts/logout/', LogoutView.as_view(next_page="login"), name="logout"),
     path('', include("registerlogin.urls")),
+    path("custom_redirect/", viewscore.custom_login_redirect, name="custom_login_redirect"),
 
     # Registro de usuario
     path('adduser/', viewscore.AddUserView.as_view(), name="adduser"),

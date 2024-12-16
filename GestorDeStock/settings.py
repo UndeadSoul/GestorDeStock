@@ -20,15 +20,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#!SECRET_KEY = os.environ.get("SECRET_KEY")
-SECRET_KEY = "2b3fc96558f385896227ca6a5ceea69c"
+SECRET_KEY = os.environ.get("SECRET_KEY")
+#!SECRET_KEY = "2b3fc96558f385896227ca6a5ceea69c"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#!DEBUG = os.environ.get("DEBUG","False").lower() == "true"
-DEBUG = False
+DEBUG = os.environ.get("DEBUG","False").lower() == "true"
+#!DEBUG = True
 
-#!ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split()
-ALLOWED_HOSTS = ["localhost","127.0.0.1"]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split()
+#!ALLOWED_HOSTS = ["localhost","127.0.0.1"]
 
 IS_PRODUCTION = os.environ.get("DJANGO_ENV") == "production"
 
@@ -42,7 +42,7 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https") if IS_PRODUCTION e
 
 #Se establecen las direcciones url útiles para el login
 LOGIN_URL = 'accounts/login/'
-LOGIN_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "custom_login_redirect"
 LOGOUT_REDIRECT_URL = "login"
 
 # Application definition
@@ -109,10 +109,10 @@ DATABASES = {
     # }
 }
 
-DATABASES["default"]=dj_database_url.parse("postgresql://gestordestock_django_render_user:ehmMD0TzTeGTQKfuuEGIit48SSDTbT1e@dpg-ctfns2tds78s73ds7jk0-a.oregon-postgres.render.com/gestordestock_django_render")
+#! DATABASES["default"]=dj_database_url.parse("postgresql://gestordestock_django_render_user:ehmMD0TzTeGTQKfuuEGIit48SSDTbT1e@dpg-ctfns2tds78s73ds7jk0-a.oregon-postgres.render.com/gestordestock_django_render")
 
-#! database_url=os.environ.get("DATABASE_URL")
-#! DATABASES["default"]=dj_database_url.parse(database_url) 
+database_url=os.environ.get("DATABASE_URL")
+DATABASES["default"]=dj_database_url.parse(database_url) 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -157,16 +157,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-# CLOUDINARY_STORAGE = {
-#     'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'ddfknxf4e'),
-#     'API_KEY': os.environ.get('CLOUDINARY_API_KEY', "731293374554384"),
-#     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', 'uyrCSmro4jFtB5IXn1u0dcEMhto'),
-# }
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'ddfknxf4e',
-    'API_KEY': "731293374554384",
-    'API_SECRET': 'uyrCSmro4jFtB5IXn1u0dcEMhto',
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', 'ddfknxf4e'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', "731293374554384"),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', 'uyrCSmro4jFtB5IXn1u0dcEMhto'),
 }
+# CLOUDINARY_STORAGE = {
+#     'CLOUD_NAME': 'ddfknxf4e',
+#     'API_KEY': "731293374554384",
+#     'API_SECRET': 'uyrCSmro4jFtB5IXn1u0dcEMhto',
+# }
 
 # Looking to send emails in production? Check out our Email API/SMTP product!
 EMAIL_HOST = 'sandbox.smtp.mailtrap.io'

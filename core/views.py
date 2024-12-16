@@ -11,6 +11,7 @@ from django.contrib import messages
 from registerlogin.models import Profile
 from django.contrib.auth.models import Group
 from django.core.mail import EmailMessage
+from django.contrib.auth.decorators import login_required
 
 # FUNCION PARA CONVERTIR EL PLURAL DE UN GRUPO A SU SINGULAR
 def plural_to_singular(plural):
@@ -23,6 +24,7 @@ def plural_to_singular(plural):
     return plural_singular.get(plural, "error")
 
 # Home
+@login_required
 def home(request):
     is_admin_or_jefe = request.user.groups.filter(name__in=['administrador', 'jefes']).exists()
     # Obtener los últimos movimientos
@@ -43,6 +45,12 @@ def home(request):
         "userprofile":user_profile,
         "is_admin_or_jefe":is_admin_or_jefe,
     })
+
+def custom_login_redirect(request):
+    products=product.objects.all().order_by('product_stock')
+    if request.user.is_authenticated:
+        return redirect("home")
+    return redirect("login")
 
 def usermanage(request):
     is_admin_or_jefe = request.user.groups.filter(name__in=['administrador', 'jefes']).exists()
