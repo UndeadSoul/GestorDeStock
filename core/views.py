@@ -83,9 +83,12 @@ class AddUserView(CreateView):
 
         # Crear el usuario
         user = form.save(commit=False)
-        #TODO generar contraseña
 
-        user.set_password("contra1234")
+        #TODO generar contraseña
+        password=form.cleaned_data.get("rut")
+        password+=form.cleaned_data.get("last_name")
+        user.set_password(password)
+
         if group_id != "1":
             user.is_staff = True
         user.save()
@@ -100,23 +103,23 @@ class AddUserView(CreateView):
         profile.image = self.request.FILES.get("image", "users/usuario_defecto.jpg")
         profile.email=user.email
         profile.save()
-        #TODO email contraseña
-        # email=EmailMessage(
-        #     "Usuario {} creado para Gestor de stock".format(form.cleaned_data.get("username")),
-        #     "Mensaje enviado por Sistema <Gestor de Stock>:\n\n{}".format(user_profile.name,user_profile.email,message),
-        #     #sender
-        #     "{}".format(user_profile.email),
-        #     #destinatario
-        #     ["c986c7998ae9f6@inbox.mailtrap.io",user_profile.email]
-        # )
-        # try:
-        #     email.send()
-        #     print("se mandó")
-        #     return redirect(reverse_lazy("finalconfirm"))
-        # except:
-        #     print("no se mandó")
-        #     return redirect(reverse_lazy("finalconfirm"))
-        
+        #email contraseña
+        message="La contraseña que se ha asignado es < {} >".format(password)
+        email=EmailMessage(
+            #asunto
+            "Usuario {} creado para Gestor de stock".format(form.cleaned_data.get("username")),
+            #mensaje
+            "Mensaje enviado por Sistema <Gestor de Stock>:\n\n{}".format(message),
+            #sender
+            "{}".format("c986c7998ae9f6@inbox.mailtrap.io"),
+            #destinatario
+            ["c986c7998ae9f6@inbox.mailtrap.io",user.email]
+        )
+        try:
+            email.send()
+            print("se mandó")
+        except:
+            print("no se mandó")
         return super().form_valid(form)
     
 # Records

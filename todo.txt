@@ -12,11 +12,10 @@
 - añadir productos
 - notificaciones por correo
 - subirlo a un hosting
+- correo con credenciales
+- contraseña "aleatoria"
 -------------HACIENDO------------
 ------------Por Hacer------------
-- correo con credenciales
-- admin tiene staff y superuser
-- contraseña "aleatoria"
 -------------Estética------------
 -----------Por el-----------
 - poder modificar los datos de un usuarios
