@@ -112,7 +112,8 @@ class AddUserView(CreateView):
         profile.email=user.email
         profile.save()
         #email contraseña
-        message="La contraseña que se ha asignado es < {} >".format(password)
+        message="Usuario {}\n".format(form.cleaned_data.get("username"))
+        message+="La contraseña que se ha asignado es < {} >".format(password)
         email=EmailMessage(
             #asunto
             "Usuario {} creado para Gestor de stock".format(form.cleaned_data.get("username")),
