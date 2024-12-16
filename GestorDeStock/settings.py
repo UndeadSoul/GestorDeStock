@@ -30,6 +30,10 @@ DEBUG = os.environ.get("DEBUG","False").lower() == "true"
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split()
 #!ALLOWED_HOSTS = ["localhost","127.0.0.1"]
 
+CSRF_TRUSTED_ORIGINS = ["https://gestordestock.onrender.com"]
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_SSL_REDIRECT = True
+
 #Se establecen las direcciones url útiles para el login
 LOGIN_URL = 'accounts/login/'
 LOGIN_REDIRECT_URL = "home"
