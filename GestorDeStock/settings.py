@@ -16,7 +16,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -32,7 +31,6 @@ ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split()
 LOGIN_URL = 'accounts/login/'
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "login"
-
 
 # Application definition
 
@@ -56,7 +54,7 @@ CRISPY_TEMPLATE_PACK="bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', 
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Debe estar aquí para servir archivos estáticos.
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -85,17 +83,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'GestorDeStock.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-
 }
 
 database_url=os.environ.get("DATABASE_URL")
@@ -121,7 +116,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -132,7 +126,6 @@ TIME_ZONE = 'America/Santiago'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -146,7 +139,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL='/media/'
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'ddfknxf4e',
+    'API_KEY': '134257624117458',
+    'API_SECRET': 'Rck3TUAsBHF1Vul9SYqJkvZtYz4',
+}
+
+MEDIA_URL='https://res.cloudinary.com/ddfknxf4e/image/upload/'
 MEDIA_ROOT=os.path.join(BASE_DIR,"media")
 
 # Looking to send emails in production? Check out our Email API/SMTP product!

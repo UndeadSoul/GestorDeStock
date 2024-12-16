@@ -1,13 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
 class Profile(models.Model):
 
     user=models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile",verbose_name="Usuario")
-    image=models.ImageField(default="usuario_defecto.jpg",verbose_name="Imagen de perfil")
+    image=CloudinaryField('image', default='https://res.cloudinary.com/ddfknxf4e/image/upload/v1734327910/gy4npmb6nrllx2iup502.jpg',verbose_name="Imagen de perfil")
     rut=models.CharField(max_length=12,null=True,blank=True,verbose_name="Rut")
     name=models.CharField(max_length=50,null=True,blank=True,verbose_name="Nombre")
     email=models.EmailField(max_length=254, verbose_name="Correo")

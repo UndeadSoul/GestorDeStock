@@ -1,6 +1,7 @@
 from django.db import models
 from registerlogin.models import Profile
 from django.db import transaction
+from cloudinary.models import CloudinaryField
 
 class employee(models.Model):
     employee_id=models.AutoField(primary_key=True)
@@ -21,7 +22,7 @@ class storage(models.Model):
 class product(models.Model):
     product_id=models.AutoField(primary_key=True)
     product_name=models.CharField(max_length=50)
-    product_image=models.ImageField()
+    product_image=CloudinaryField('image', default='https://res.cloudinary.com/ddfknxf4e/image/upload/v1734327909/zzpxq71qifkzk0nlmyxd.jpg')
     product_stock=models.PositiveIntegerField()
     product_price=models.PositiveIntegerField()
     product_desc=models.CharField(max_length=50)
